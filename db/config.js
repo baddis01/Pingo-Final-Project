@@ -1,7 +1,3 @@
-import "dotenv/config";
-
-console.log(process.env.FIREBASEAPIKEY);
-
 const firebaseConfig = {
   apiKey: "AIzaSyDZxkbkaR1gzfeuIQbIyvB2wPb0_sEQrXs",
   authDomain: "pingo-8f9f8.firebaseapp.com",
