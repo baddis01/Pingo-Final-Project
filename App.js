@@ -1,5 +1,5 @@
 //import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./db/config";
 import Pack from "./components/Pack";
@@ -21,9 +21,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <UserContext.Provider value={{ user, setUser }}>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Packs" component={Packs} />
+        </Stack.Navigator>
         <View style={styles.container}>
-          <UserInfo />
-          <Login />
+          {/* <UserInfo />*/}
           {/* <Packs />
       <Pack /> */}
           {/* <StatusBar style="auto" /> */}
