@@ -1,14 +1,15 @@
 import {
   Text,
   View,
-  FlatList
+  FlatList,
+  SafeAreaView
 } from "react-native";
 
 const TasksList = ({ tasks }) => {
   let i = 0;
 
   return (
-    <View>
+    <SafeAreaView>
       <FlatList
         data={tasks}
         keyExtractor={(tasks, index) => {
@@ -18,7 +19,7 @@ const TasksList = ({ tasks }) => {
           return <Text>{task.description}</Text>
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

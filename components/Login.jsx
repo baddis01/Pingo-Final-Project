@@ -7,6 +7,7 @@ import {
   TextInput,
   Button,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import { useState } from "react";
@@ -34,7 +35,7 @@ const Login = ({ navigation }) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView contentContainerStyle={styles.container}>
       <Text>Welcome to Pingo</Text>
       <View>
         <Text>Please login with your username or join as a guest</Text>
@@ -68,13 +69,13 @@ const Login = ({ navigation }) => {
           title="Login as Guest"
         />
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",

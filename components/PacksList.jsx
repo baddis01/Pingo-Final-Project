@@ -1,7 +1,8 @@
 import {
   Text,
   View,
-  FlatList
+  FlatList,
+  SafeAreaView
 } from "react-native";
 
 
@@ -9,7 +10,7 @@ const PacksList = ({ packs }) => {
   let i = 0;
 
   return (
-    <View>
+    <SafeAreaView>
       <FlatList
         data={packs}
         keyExtractor={(packs, index) => {
@@ -18,7 +19,7 @@ const PacksList = ({ packs }) => {
         renderItem={(pack, index) => {
           return <Text>{pack.title}</Text>
         }} />
-    </View>
+    </SafeAreaView>
   );
 };
 
