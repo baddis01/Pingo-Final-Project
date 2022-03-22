@@ -56,12 +56,14 @@ const Login = ({ navigation }) => {
           }}
           defaultValue="Name"
         />
-        <Button onPress={() =>
-          navigation.navigate(
-            'Packs')} style={styles.button} title="Join" />
+        <Button
+          onPress={() => navigation.navigate("Packs")}
+          style={styles.button}
+          title="Join"
+        />
         <View style={styles.space} />
         <Button
-          onPress={loginGuest}
+          onPress={() => navigation.navigate("Packs")}
           style={styles.button}
           title="Login as Guest"
         />

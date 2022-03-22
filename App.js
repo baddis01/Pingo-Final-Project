@@ -6,10 +6,11 @@ import Pack from "./components/Pack";
 import Packs from "./components/Packs";
 import Login from "./components/Login";
 import { UserContext } from "./contexts/UserContext";
-import { useState } from 'react';
+import { useState } from "react";
 import UserInfo from "./components/UserInfo";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TasksList from "./components/TasksList";
 
 const app = initializeApp(firebaseConfig);
 
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Packs" component={Packs} />
+          <Stack.Screen name="TasksList" component={TasksList} />
         </Stack.Navigator>
         <View style={styles.container}>
           {/* <UserInfo />*/}

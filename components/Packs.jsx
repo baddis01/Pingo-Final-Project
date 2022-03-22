@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import PacksList from "./PacksList";
 import * as db from "../db";
-import {
-  Text,
-  View
-} from "react-native";
+import { Button, Text, View } from "react-native";
 
-const Packs = () => {
+const Packs = ({ navigation }) => {
   const [packs, setPacks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,11 +15,21 @@ const Packs = () => {
     });
   }, []);
 
-  if (isLoading) return <View><Text>Loading...</Text></View>
+  if (isLoading)
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
 
   return (
     <View>
       <Text>All Packs</Text>
+      <Button
+        onPress={() => navigation.navigate("TasksList")}
+        title="Manchester"
+      />
+      <Button title="London" />
       <PacksList packs={packs} />
     </View>
   );
