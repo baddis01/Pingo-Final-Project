@@ -27,6 +27,7 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Packs" component={Packs} />
             <Stack.Screen name="TasksList" component={TasksList} />
+            <Stack.Screen name="Pack" component={Pack} />
           </Stack.Navigator>
           <View style={styles.container}>
             {/* <UserInfo />*/}
