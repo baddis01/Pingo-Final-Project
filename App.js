@@ -8,23 +8,28 @@ import Login from "./components/Login";
 import { UserContext } from "./contexts/UserContext";
 import { useState } from 'react';
 import UserInfo from "./components/UserInfo";
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const app = initializeApp(firebaseConfig);
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
-const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-    <View style={styles.container}>
-      <UserInfo/>
-      <Login/>
-      {/* <Packs />
+    <NavigationContainer>
+      <UserContext.Provider value={{ user, setUser }}>
+        <View style={styles.container}>
+          <UserInfo />
+          <Login />
+          {/* <Packs />
       <Pack /> */}
-      {/* <StatusBar style="auto" /> */}
-    </View>
-    </UserContext.Provider>
+          {/* <StatusBar style="auto" /> */}
+        </View>
+      </UserContext.Provider>
+    </NavigationContainer>
   );
 }
 
