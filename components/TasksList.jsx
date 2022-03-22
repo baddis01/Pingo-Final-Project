@@ -1,12 +1,24 @@
+import {
+  Text,
+  View,
+  FlatList
+} from "react-native";
+
 const TasksList = ({ tasks }) => {
   let i = 0;
 
   return (
-    <ul>
-      {tasks.map((task) => {
-        return <li key={i++}>{task.description}</li>;
-      })}
-    </ul>
+    <View>
+      <FlatList
+        data={tasks}
+        keyExtractor={(tasks, index) => {
+          return 'task' + index
+        }}
+        renderItem={(task) => {
+          return <Text>{task.description}</Text>
+        }}
+      />
+    </View>
   );
 };
 

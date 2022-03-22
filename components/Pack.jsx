@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import TasksList from "./TasksList";
 import * as db from "../db";
+import {
+  Text,
+  View
+} from "react-native";
 
 const Pack = () => {
   const [pack, setPack] = useState([]);
@@ -15,13 +19,13 @@ const Pack = () => {
     });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <View><Text>Loading...</Text></View>
 
   return (
-    <>
-      <h1> {pack.title} </h1>
+    <View>
+      <Text> {pack.title} </Text>
       <TasksList tasks={pack.tasks} />
-    </>
+    </View>
   );
 };
 
