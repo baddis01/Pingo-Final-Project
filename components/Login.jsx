@@ -11,7 +11,7 @@ import {
 import { UserContext } from "../contexts/UserContext";
 import { useState } from "react";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [userNameInput, setUserNameInput] = useState(null);
 
@@ -56,7 +56,9 @@ const Login = () => {
           }}
           defaultValue="Name"
         />
-        <Button onPress={loginUser} style={styles.button} title="Join" />
+        <Button onPress={() =>
+          navigation.navigate(
+            'Packs')} style={styles.button} title="Join" />
         <View style={styles.space} />
         <Button
           onPress={loginGuest}
