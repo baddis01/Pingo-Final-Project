@@ -1,5 +1,5 @@
 //import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView, SafeAreaView } from "react-native";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./db/config";
 import Pack from "./components/Pack";
@@ -20,27 +20,29 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   return (
-    <NavigationContainer>
-      <UserContext.Provider value={{ user, setUser }}>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Packs" component={Packs} />
-          <Stack.Screen name="TasksList" component={TasksList} />
-        </Stack.Navigator>
-        <View style={styles.container}>
-          {/* <UserInfo />*/}
-          {/* <Packs />
+    <>
+      <NavigationContainer>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Stack.Navigator>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Packs" component={Packs} />
+            <Stack.Screen name="TasksList" component={TasksList} />
+          </Stack.Navigator>
+          <View style={styles.container}>
+            {/* <UserInfo />*/}
+            {/* <Packs />
       <Pack /> */}
-          {/* <StatusBar style="auto" /> */}
-        </View>
-      </UserContext.Provider>
-    </NavigationContainer>
+            {/* <StatusBar style="auto" /> */}
+          </View>
+        </UserContext.Provider>
+      </NavigationContainer>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection: 'column',
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
