@@ -25,11 +25,6 @@ const Packs = ({ navigation }) => {
   return (
     <View>
       <Text>All Packs</Text>
-      <Button
-        onPress={() => navigation.navigate("TasksList")}
-        title="Manchester"
-      />
-      <Button title="London" />
       <PacksList packs={packs} />
     </View>
   );
