@@ -6,6 +6,7 @@ import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TasksList from "./src/components/TasksList";
+import Grid from "./src/components/Grid";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
             <Stack.Screen name="Packs" component={Packs} />
             <Stack.Screen name="TasksList" component={TasksList} />
             <Stack.Screen name="Pack" component={Pack} />
+            {/* <Stack.Screen name="Grid" component={Grid} /> */}
           </Stack.Navigator>
         </UserContext.Provider>
       </NavigationContainer>
