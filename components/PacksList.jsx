@@ -3,25 +3,35 @@ import {
   View,
   FlatList,
   SafeAreaView,
-  TouchableOpacity
-} from "react-native";
+  TouchableOpacity,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-
-const PacksList = ({ packs, navigation }) => {
+const PacksList = ({ packs }) => {
   let i = 0;
-  console.log(packs[1].title)
+  const navigation = useNavigation();
   return (
-    < SafeAreaView >
+    <SafeAreaView>
       <FlatList
         data={packs}
         keyExtractor={(packs, index) => {
-          return 'pack' + index
+          return 'pack' + index;
         }}
-        renderItem={(pack, index) => {
-          return <Text onPress={() => navigation.navigate("Pack")}>{pack.title}</Text>
-        }
-        } />
-    </SafeAreaView >
+        renderItem={({ item }, index) => {
+          return (
+            <Text
+              onPress={() =>
+                navigation.navigate('Pack', {
+                  itemId: item.id,
+                })
+              }
+            >
+              {item.data.title}
+            </Text>
+          );
+        }}
+      />
+    </SafeAreaView>
   );
 };
 
