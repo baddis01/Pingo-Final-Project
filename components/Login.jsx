@@ -7,13 +7,16 @@ import {
   TextInput,
   Button,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { UserContext } from "../contexts/UserContext";
 import { useState } from "react";
 
 const Login = () => {
   const { user, setUser } = useContext(UserContext);
   const [userNameInput, setUserNameInput] = useState(null);
+  const navigation = useNavigation();
 
   function loginGuest() {
     const guestUser = {
@@ -34,7 +37,7 @@ const Login = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView contentContainerStyle={styles.container}>
       <Text>Welcome to Pingo</Text>
       <View>
         <Text>Please login with your username or join as a guest</Text>
@@ -56,21 +59,25 @@ const Login = () => {
           }}
           defaultValue="Name"
         />
-        <Button onPress={loginUser} style={styles.button} title="Join" />
+        <Button
+          onPress={() => navigation.navigate("Packs")}
+          style={styles.button}
+          title="Join"
+        />
         <View style={styles.space} />
         <Button
-          onPress={loginGuest}
+          onPress={() => navigation.navigate("Packs")}
           style={styles.button}
           title="Login as Guest"
         />
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",

@@ -1,27 +1,34 @@
 import { useState, useEffect } from "react";
 import TasksList from "./TasksList";
 import * as db from "../db";
+import {
+  Text,
+  View
+} from "react-native";
+import { useRoute } from '@react-navigation/native';
+
 
 const Pack = () => {
   const [pack, setPack] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const manchesterPackId = "KLkAvp2KxjZtYHMU04vf";
+  const route = useRoute();
+  const { itemId } = route.params;
 
   useEffect(() => {
     setIsLoading(true);
-    db.getPack(manchesterPackId).then((data) => {
+    db.getPack(itemId).then((data) => {
       setPack(data);
       setIsLoading(false);
     });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <View><Text>Loading...</Text></View>
 
   return (
-    <>
-      <h1> {pack.title} </h1>
+    <View>
+      <Text> {pack.title} </Text>
       <TasksList tasks={pack.tasks} />
-    </>
+    </View>
   );
 };
 

@@ -1,12 +1,25 @@
+import {
+  Text,
+  View,
+  FlatList,
+  SafeAreaView
+} from "react-native";
+
 const TasksList = ({ tasks }) => {
   let i = 0;
 
   return (
-    <ul>
-      {tasks.map((task) => {
-        return <li key={i++}>{task.description}</li>;
-      })}
-    </ul>
+    <SafeAreaView>
+      <FlatList
+        data={tasks}
+        keyExtractor={(tasks, index) => {
+          return 'task' + index
+        }}
+        renderItem={(res) => {
+          return <Text>{res.item.description}</Text>
+        }}
+      />
+    </SafeAreaView>
   );
 };
 
