@@ -11,6 +11,7 @@ import UserInfo from "./components/UserInfo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TasksList from "./components/TasksList";
+import Grid from "./components/Grid";
 
 const app = initializeApp(firebaseConfig);
 
@@ -21,28 +22,29 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <UserContext.Provider value={{ user, setUser }}>
           <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Packs" component={Packs} />
             <Stack.Screen name="TasksList" component={TasksList} />
-          </Stack.Navigator>
-          <View style={styles.container}>
-            {/* <UserInfo />*/}
-            {/* <Packs />
-      <Pack /> */}
-            {/* <StatusBar style="auto" /> */}
-          </View>
-        </UserContext.Provider>
-      </NavigationContainer>
+          </Stack.Navigator> */}
+      {/* <View style={styles.container}> */}
+      {/* <UserInfo />*/}
+      {/* <Packs /> */}
+      {/* <Pack /> */}
+      <Grid />
+      {/* <StatusBar style="auto" /> */}
+      {/* </View> */}
+      {/* </UserContext.Provider>
+      </NavigationContainer> */}
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flexDirection: "column",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
