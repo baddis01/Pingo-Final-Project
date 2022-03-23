@@ -15,8 +15,8 @@ const TasksList = ({ tasks }) => {
         keyExtractor={(tasks, index) => {
           return 'task' + index
         }}
-        renderItem={(task) => {
-          return <Text>{task.description}</Text>
+        renderItem={(res) => {
+          return <Text>{res.item.description}</Text>
         }}
       />
     </SafeAreaView>
