@@ -9,12 +9,14 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { UserContext } from "../contexts/UserContext";
 import { useState } from "react";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const { user, setUser } = useContext(UserContext);
   const [userNameInput, setUserNameInput] = useState(null);
+  const navigation = useNavigation();
 
   function loginGuest() {
     const guestUser = {
