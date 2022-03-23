@@ -5,15 +5,18 @@ import {
   Text,
   View
 } from "react-native";
+import { useRoute } from '@react-navigation/native';
+
 
 const Pack = () => {
   const [pack, setPack] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const manchesterPackId = "KLkAvp2KxjZtYHMU04vf";
+  const route = useRoute();
+  const { itemId } = route.params;
 
   useEffect(() => {
     setIsLoading(true);
-    db.getPack(manchesterPackId).then((data) => {
+    db.getPack(itemId).then((data) => {
       setPack(data);
       setIsLoading(false);
     });
