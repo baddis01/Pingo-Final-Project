@@ -2,24 +2,26 @@ import {
   Text,
   View,
   FlatList,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity
 } from "react-native";
 
 
-const PacksList = ({ packs }) => {
+const PacksList = ({ packs, navigation }) => {
   let i = 0;
-
+  console.log(packs[1].title)
   return (
-    <SafeAreaView>
+    < SafeAreaView >
       <FlatList
         data={packs}
         keyExtractor={(packs, index) => {
           return 'pack' + index
         }}
         renderItem={(pack, index) => {
-          return <Text>{pack.title}</Text>
-        }} />
-    </SafeAreaView>
+          return <Text onPress={() => navigation.navigate("Pack")}>{pack.title}</Text>
+        }
+        } />
+    </SafeAreaView >
   );
 };
 

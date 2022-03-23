@@ -10,6 +10,7 @@ export async function getPack(id) {
 export async function getPacks() {
   const tasksCol = collection(db, "packs");
   const tasksSnapshot = await getDocs(tasksCol);
-  const tasksList = tasksSnapshot.docs.map((doc) => doc.data());
+  const tasksList = tasksSnapshot.docs.map((doc) => { return { id: doc.id, data: doc.data() } });
   return tasksList;
 }
+
