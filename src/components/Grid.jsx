@@ -3,20 +3,18 @@ import React from "react";
 import { View, StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
 
 export default function Grid({ tasks }) {
-  const GridView = ({ description }) => (
-    <View style={styleSheet.gridStyle}>
-      <Text style={styleSheet.gridText}>{description}</Text>
-    </View>
+  const GridView = ({ tasks }) => (
+    < View style={styleSheet.gridStyle} >
+      <Text style={styleSheet.gridText}>{tasks}</Text>
+    </View >
   );
-
   return (
     <SafeAreaView style={styleSheet.MainContainer}>
       <FlatList
         data={tasks}
-        renderItem={({ item }) => <GridView description={item.description} />}
-        keyExtractor={(item) => item.id}
+        renderItem={(tasks) => < GridView tasks={tasks.item.description} />}
+        keyExtractor={(tasks, index) => "task" + index}
         numColumns={3}
-        key={(item) => item.id}
       />
     </SafeAreaView>
   );
@@ -24,10 +22,8 @@ export default function Grid({ tasks }) {
 
 const styleSheet = StyleSheet.create({
   MainContainer: {
-    flex: 1,
     backgroundColor: "white",
   },
-
   gridStyle: {
     flex: 1,
     justifyContent: "center",

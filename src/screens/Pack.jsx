@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Grid from "../components/Grid";
 import * as db from "../db";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 const Pack = () => {
@@ -27,10 +27,18 @@ const Pack = () => {
 
   return (
     <View>
-      <Text> {pack.title} </Text>
+      <Text style={styles.packTitle}> {pack.title} </Text>
       <Grid tasks={pack.tasks} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  packTitle: {
+    fontSize: 30,
+    textAlign: "center",
+    fontFamily: 'Avenir Next'
+  },
+});
 
 export default Pack;
