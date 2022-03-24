@@ -4,16 +4,18 @@ import { Camera } from "expo-camera";
 
 const CameraComp = () => {
   const [hasPermission, setHasPermission] = useState(null);
-  //   const [previewVisible, setPreviewVisible] = useState(false);
-  //   const [capturedImage, setCapturedImage] = useState(null);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [capturedImage, setCapturedImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
+  let camera = Camera;
+
   const __takePicture = async () => {
-    if (!Camera) return;
-    const photo = await Camera.takePictureAsync();
+    if (!camera) return;
+    const photo = await camera.takePictureAsync();
     console.log(photo);
-    // setPreviewVisible(true);
-    // setCapturedImage(photo);
+    setPreviewVisible(true);
+    setCapturedImage(photo);
   };
 
   useEffect(() => {
@@ -32,51 +34,36 @@ const CameraComp = () => {
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}
-          >
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>
-        </View>
-        {/* <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            flexDirection: "row",
-            flex: 1,
-            width: "100%",
-            padding: 20,
-            justifyContent: "space-between",
-          }}
-        >
-          <View
-            style={{
-              alignSelf: "center",
-              flex: 1,
-              alignItems: "center",
-            }}
-          >
+      <Camera
+        style={styles.camera}
+        type={type}
+        ref={(r) => {
+          camera = r;
+        }}
+      >
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.flipButton}
+              onPress={() => {
+                setType(
+                  type === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back
+                );
+              }}
+            >
+              <Text style={styles.text}> Flip </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={__takePicture}
-              style={{
-                width: 70,
-                height: 70,
-                bottom: 0,
-                borderRadius: 50,
-                backgroundColor: "#fff",
-              }}
+              style={styles.captureButton}
             />
           </View>
-        </View> */}
+          <View style={styles.buttonContainer}></View>
+        </View>
       </Camera>
     </View>
   );
@@ -89,20 +76,31 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
-  buttonContainer: {
+  buttonsContainer: {
     flex: 1,
     backgroundColor: "transparent",
     flexDirection: "row",
     margin: 20,
   },
-  button: {
-    flex: 0.1,
-    alignSelf: "flex-end",
-    alignItems: "center",
+  flipButton: {
+    alignSelf: "center",
+  },
+  captureButton: {
+    width: 70,
+    height: 70,
+    bottom: 0,
+    borderRadius: 50,
+    backgroundColor: "#fff",
+    alignSelf: "center",
   },
   text: {
-    fontSize: 18,
+    fontSize: 40,
     color: "white",
+  },
+  buttonContainer: {
+    flex: 1,
+    height: 70,
+    alignSelf: "flex-end",
   },
 });
 
