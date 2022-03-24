@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Grid from "../components/Grid";
+import TasksList from "../components/TasksList";
 import * as db from "../db";
 import { Text, View, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
@@ -28,7 +28,7 @@ const Pack = () => {
   return (
     <View>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <Grid tasks={pack.tasks} />
+      <TasksList tasks={pack.tasks} />
     </View>
   );
 };
