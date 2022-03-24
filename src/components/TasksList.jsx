@@ -1,18 +1,35 @@
 import React from "react";
 
-import { View, StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+//   onPress={() => console.log("pressed task", tasks.item.id)}
 
 export default function TasksList({ tasks }) {
+  const navigation = useNavigation();
   const GridView = ({ tasks }) => (
-    < View style={styleSheet.gridStyle} >
-      <Text style={styleSheet.gridText}>{tasks}</Text>
-    </View >
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Camera", {
+          taskId: tasks.item.id,
+        })
+      }
+      style={styleSheet.gridStyle}
+    >
+      <Text style={styleSheet.gridText}>{tasks.item.description}</Text>
+    </TouchableOpacity>
   );
   return (
     <SafeAreaView style={styleSheet.MainContainer}>
       <FlatList
         data={tasks}
-        renderItem={(tasks) => < GridView tasks={tasks.item.description} />}
+        renderItem={(tasks) => <GridView tasks={tasks} />}
         keyExtractor={(tasks, index) => "task" + index}
         numColumns={3}
       />
