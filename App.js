@@ -6,24 +6,26 @@ import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TasksList from "./src/components/TasksList";
+import TasksList from "./src/components/TasksList";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    return (
-        <>
-            <NavigationContainer>
-                <UserContext.Provider value={{ user, setUser }}>
-                    <Stack.Navigator>
-                        <Stack.Screen name="Login" component={Login} />
-                        <Stack.Screen name="Packs" component={Packs} />
-                        <Stack.Screen name="TasksList" component={TasksList} />
-                        <Stack.Screen name="Pack" component={Pack} />
-                    </Stack.Navigator>
-                </UserContext.Provider>
-            </NavigationContainer>
-        </>
-    );
+  return (
+    <>
+      <NavigationContainer>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Stack.Navigator>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Packs" component={Packs} />
+            <Stack.Screen name="TasksList" component={TasksList} />
+            <Stack.Screen name="Pack" component={Pack} />
+            {/* <Stack.Screen name="Grid" component={Grid} /> */}
+          </Stack.Navigator>
+        </UserContext.Provider>
+      </NavigationContainer>
+    </>
+  );
 }
