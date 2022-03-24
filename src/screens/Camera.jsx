@@ -6,6 +6,9 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 const CameraComp = () => {
+  const route = useRoute();
+  const { user } = useContext(UserContext);
+  console.log(route.params, user);
   const [hasPermission, setHasPermission] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
