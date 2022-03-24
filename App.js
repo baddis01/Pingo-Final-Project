@@ -1,6 +1,7 @@
 import Pack from "./src/screens/Pack";
 import Packs from "./src/screens/Packs";
 import Login from "./src/screens/Login";
+import Camera from "./src/screens/Camera";
 import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,7 +22,7 @@ export default function App() {
             <Stack.Screen name="Packs" component={Packs} />
             <Stack.Screen name="TasksList" component={TasksList} />
             <Stack.Screen name="Pack" component={Pack} />
-            {/* <Stack.Screen name="Grid" component={Grid} /> */}
+            <Stack.Screen name="Camera" component={Camera} />
           </Stack.Navigator>
         </UserContext.Provider>
       </NavigationContainer>
