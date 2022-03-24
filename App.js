@@ -3,7 +3,7 @@ import Packs from "./src/screens/Packs";
 import Login from "./src/screens/Login";
 import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TasksList from "./src/components/TasksList";
 
@@ -12,9 +12,17 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [user, setUser] = useState(null);
 
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#F7Efe7'
+    },
+  };
+
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <UserContext.Provider value={{ user, setUser }}>
           <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} />
