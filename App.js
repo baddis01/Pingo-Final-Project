@@ -21,7 +21,7 @@ export default function App() {
             <Stack.Screen name="Packs" component={Packs} />
             <Stack.Screen name="TasksList" component={TasksList} />
             <Stack.Screen name="Pack" component={Pack} />
-            {/* <Stack.Screen name="Grid" component={Grid} /> */}
+            <Stack.Screen name="Camera" component={Camera} />
           </Stack.Navigator>
         </UserContext.Provider>
       </NavigationContainer>
