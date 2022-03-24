@@ -28,7 +28,7 @@ const Pack = () => {
   return (
     <View>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <TasksList tasks={pack.tasks} />
+      <TasksList tasks={pack.tasks} packId={itemId} />
     </View>
   );
 };
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   packTitle: {
     fontSize: 30,
     textAlign: "center",
-    fontFamily: 'Avenir Next'
+    fontFamily: "Avenir Next",
   },
 });
 

@@ -14,10 +14,11 @@ import { useState } from 'react';
 import logo from "../assets/logo.png";
 import cameraButton from '../assets/camera_camera.png'
 
+
 const Login = () => {
-    const { user, setUser } = useContext(UserContext);
-    const [userNameInput, setUserNameInput] = useState(null);
-    const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
+  const [userNameInput, setUserNameInput] = useState(null);
+  const navigation = useNavigation();
 
     function loginGuest() {
         const guestUser = {
@@ -28,15 +29,14 @@ const Login = () => {
         });
     }
 
-    function loginUser() {
-        const newUser = {
-            username: userNameInput,
-        };
-        setUser(() => {
-            return newUser;
-        });
-    }
-
+  function loginUser() {
+    const newUser = {
+      username: userNameInput,
+    };
+    setUser(() => {
+      return newUser;
+    });
+  }
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
             <View>
@@ -74,9 +74,22 @@ const Login = () => {
         </SafeAreaView >
     );
 };
-
+  
 const styles = StyleSheet.create({
-    container: {
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    marginBottom: 10,
+  },
+  space: {
+    width: 20,
+    height: 20,
+  },
+      container: {
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
