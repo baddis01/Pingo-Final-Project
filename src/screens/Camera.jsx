@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
+import { useRoute } from "@react-navigation/native";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const CameraComp = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -13,7 +16,6 @@ const CameraComp = () => {
   const __takePicture = async () => {
     if (!camera) return;
     const photo = await camera.takePictureAsync();
-    console.log(photo);
     setPreviewVisible(true);
     setCapturedImage(photo);
   };

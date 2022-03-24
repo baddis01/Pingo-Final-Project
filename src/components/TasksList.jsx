@@ -11,13 +11,14 @@ import { useNavigation } from "@react-navigation/native";
 
 //   onPress={() => console.log("pressed task", tasks.item.id)}
 
-export default function TasksList({ tasks }) {
+export default function TasksList({ tasks, packId }) {
   const navigation = useNavigation();
   const GridView = ({ tasks }) => (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("Camera", {
           taskId: tasks.item.id,
+          packId,
         })
       }
       style={styleSheet.gridStyle}
