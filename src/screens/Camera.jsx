@@ -5,6 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { useNavigation } from "@react-navigation/native";
 
 const CameraComp = () => {
   const { params } = useRoute();
@@ -16,6 +17,8 @@ const CameraComp = () => {
   const [type, setType] = useState(Camera.Constants.Type.back);
 
   let camera = Camera;
+
+  const navigation = useNavigation();
 
   const __takePicture = async () => {
     if (!camera) return;
@@ -47,8 +50,10 @@ const CameraComp = () => {
       `${params.packId}/${user.username}/${params.taskId}`
     );
 
-    uploadBytes(storageRef, blob).then((snapshot) => {
-      console.log("Uploaded a blob or file!");
+    uploadBytes(storageRef, blob).then((snapshot) => {});
+    navigation.navigate("Pack", {
+      taskId: params.taskId,
+      taskCompleted: true,
     });
   }
 
