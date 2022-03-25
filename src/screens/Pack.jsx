@@ -3,12 +3,16 @@ import TasksList from "../components/TasksList";
 import * as db from "../db";
 import { Text, View, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 
 const Pack = () => {
   const [pack, setPack] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const route = useRoute();
   const { itemId } = route.params;
+  let [fontsLoaded] = useFonts({
+    BebasNeue_400Regular,
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -18,7 +22,7 @@ const Pack = () => {
     });
   }, []);
 
-  if (isLoading)
+  if (isLoading || !fontsLoaded)
     return (
       <View>
         <Text>Loading...</Text>
@@ -28,16 +32,17 @@ const Pack = () => {
   return (
     <View>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <TasksList tasks={pack.tasks} packId={itemId} />
+      <TasksList style={styles.packTitle} tasks={pack.tasks} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   packTitle: {
-    fontSize: 30,
+    fontSize: 70,
     textAlign: "center",
-    fontFamily: "Avenir Next",
+    fontFamily: "BebasNeue_400Regular",
+    color: "#24112F",
   },
 });
 
