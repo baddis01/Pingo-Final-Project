@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 
 import {
   StyleSheet,
@@ -9,13 +9,13 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
-import { dab1, dab2, dab3 } from "../assets/dabs/dabindex";
+import { dab1, dab2, dab3, blank } from "../assets/dabs/dabindex";
 
 //   onPress={() => console.log("pressed task", tasks.item.id)}
 
-const dabs = [dab1, dab2, dab3];
+const defaultDabs = [dab1, dab2, dab3];
 
 // ------setting bingo card sizes------
 const screenWidth = Dimensions.get("screen").width;
@@ -24,6 +24,21 @@ const tileSize = screenWidth / numColumns;
 
 export default function TasksList({ tasks, packId }) {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [dabs, setDabs] = useState(blank);
+
+  useEffect(() => {
+    if (route.params.taskCompleted) {
+      console.log(route.params);
+      setDabs(randomDab);
+    }
+  }, []);
+  // console.log(route.params);
+
+  const randomDab = () => {
+    return defaultDabs[Math.floor(Math.random() * defaultDabs.length)];
+  };
+
   const GridView = ({ tasks }) => (
     <TouchableOpacity
       onPress={() =>
@@ -36,8 +51,7 @@ export default function TasksList({ tasks, packId }) {
     >
       {/* ------ask someone about onpress so dabs only show when pressed ------ */}
       <ImageBackground
-        // random coloured dabs
-        source={dabs[Math.floor(Math.random() * dabs.length)]}
+        source={dabs}
         resizeMode="contain"
         style={styleSheet.image}
       >
