@@ -4,8 +4,12 @@ import { Camera } from "expo-camera";
 import { useRoute } from "@react-navigation/native";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const CameraComp = () => {
+  const { params } = useRoute();
+  const { user } = useContext(UserContext);
+  // console.log(params, user);
   const [hasPermission, setHasPermission] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -18,7 +22,35 @@ const CameraComp = () => {
     const photo = await camera.takePictureAsync();
     setPreviewVisible(true);
     setCapturedImage(photo);
+    uploadImageAsync(photo.uri);
   };
+
+  async function uploadImageAsync(uri) {
+    // console.log(uri);
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        // console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const storage = getStorage();
+    const storageRef = ref(
+      storage,
+      `${params.packId}/${user.username}/${params.taskId}`
+    );
+
+    uploadBytes(storageRef, blob).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
+  }
 
   useEffect(() => {
     (async () => {
