@@ -13,4 +13,3 @@ export async function getPacks() {
   const tasksList = tasksSnapshot.docs.map((doc) => { return { id: doc.id, data: doc.data() } });
   return tasksList;
 }
-
