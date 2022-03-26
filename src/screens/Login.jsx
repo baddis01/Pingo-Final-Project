@@ -7,6 +7,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Platform,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/UserContext";
@@ -40,26 +44,32 @@ const Login = () => {
   }
   return (
     <SafeAreaView contentContainerStyle={styles.container}>
-      <View>
-        <Image source={cameraButton} style={styles.cameraLogo} />
-        <Image source={logo} style={styles.logo} />
-        <View style={styles.textInputWrapper}>
-          <TextInput
-            onChangeText={setUserNameInput}
-            style={styles.textInput}
-            defaultValue="Please login with your username"
-          />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <Image source={cameraButton} style={styles.cameraLogo} />
+          <Image source={logo} style={styles.logo} />
+          <View style={styles.textInputWrapper}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+              <TextInput
+                onChangeText={setUserNameInput}
+                style={styles.textInput}
+                placeholder="Please login with your username"
+              />
+            </KeyboardAvoidingView>
+          </View>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity onPress={loginUser} style={styles.button}>
+              <Text style={styles.text}>Join</Text>
+            </TouchableOpacity>
+            <View style={styles.space} />
+            <TouchableOpacity onPress={loginGuest} style={styles.button}>
+              <Text style={styles.text}>Login as Guest</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity onPress={loginUser} style={styles.button}>
-            <Text style={styles.text}>Join</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity onPress={loginGuest} style={styles.button}>
-            <Text style={styles.text}>Login as Guest</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
