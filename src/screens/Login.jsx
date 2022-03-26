@@ -7,17 +7,30 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/UserContext";
 import { useState } from "react";
-import logo from "../assets/logo.png";
-import cameraButton from "../assets/camera_camera.png";
+import AppLoading from "expo-app-loading";
+import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
+import bigDabs from "../assets/bigdabs.png";
+import gamify from "../assets/gamify.png";
+
+const win = Dimensions.get("window");
 
 const Login = () => {
   const { user, setUser } = useContext(UserContext);
   const [userNameInput, setUserNameInput] = useState(null);
   const navigation = useNavigation();
+
+  let [fontsLoaded] = useFonts({
+    BebasNeue_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   function loginGuest() {
     const guestUser = {
@@ -41,23 +54,28 @@ const Login = () => {
   return (
     <SafeAreaView contentContainerStyle={styles.container}>
       <View>
-        <Image source={cameraButton} style={styles.cameraLogo} />
-        <Image source={logo} style={styles.logo} />
-        <View style={styles.textInputWrapper}>
-          <TextInput
-            onChangeText={setUserNameInput}
-            style={styles.textInput}
-            defaultValue="Please login with your username"
-          />
-        </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity onPress={loginUser} style={styles.button}>
-            <Text style={styles.text}>Join</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity onPress={loginGuest} style={styles.button}>
-            <Text style={styles.text}>Login as Guest</Text>
-          </TouchableOpacity>
+        <Image source={gamify} style={styles.cameraLogo} />
+        <View style={styles.centralPage}>
+          <Image source={bigDabs} style={styles.logo} />
+          <View style={styles.buttons}>
+            <View style={styles.textInputWrapper}>
+              <TextInput
+                onChangeText={setUserNameInput}
+                style={styles.textInput}
+                defaultValue="Name"
+              />
+              {/* ------buttons------- */}
+              <View style={styles.buttonWrapper}>
+                <TouchableOpacity onPress={loginUser} style={styles.button}>
+                  <Text style={styles.text}>Login</Text>
+                </TouchableOpacity>
+                <View style={styles.space} />
+                <TouchableOpacity onPress={loginGuest} style={styles.button}>
+                  <Text style={styles.text}>Guest</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -66,85 +84,74 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    marginBottom: 30,
   },
-  button: {
-    marginBottom: 10,
+  centralPage: {
+    height: win.height / 1.65,
+    display: "flex",
+    alignItems: "stretch",
+    justifyContent: "center",
   },
   space: {
     width: 20,
     height: 20,
   },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   cameraLogo: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: "contain",
-    paddingTop: 25,
-    paddingBottom: 100,
-    marginLeft: 170,
-    marginTop: 10,
+    width: win.height / 6.5,
+    height: win.height / 6.5,
+    margin: 20,
+    marginBottom: 20,
+    alignSelf: "flex-end",
   },
   logo: {
-    width: 350,
-    height: 200,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    marginTop: 20,
-    marginLeft: 15,
-    // paddingLeft: 10,
+    width: win.width / 1.1,
+    height: win.width / 2,
+    resizeMode: "contain",
+    alignSelf: "center",
   },
   text: {
-    paddingTop: 15,
+    padding: 10,
     paddingBottom: 100,
-    color: "white",
+    color: "#F7Efe7",
     textAlign: "center",
-  },
-  tagline: {
-    paddingTop: 25,
-    paddingLeft: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    fontFamily: "BebasNeue_400Regular",
+    fontSize: 20,
   },
   textInputWrapper: {
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 100,
   },
   textInput: {
     height: 40,
+    width: win.width / 1.4,
     borderColor: "gray",
     borderWidth: 1,
     textAlign: "center",
-    width: 270,
-    height: 50,
     borderRadius: 35,
     borderColor: "#24112F",
     borderWidth: 1.25,
   },
+  buttons: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    flexGrow: 1,
+  },
   button: {
-    width: "50%",
-    height: 50,
+    width: win.width / 1.4,
+    height: 44,
     borderRadius: 35,
     backgroundColor: "#24112F",
+    color: "#F7Efe7",
+    fontFamily: "BebasNeue_400Regular",
   },
   buttonWrapper: {
-    paddingTop: 25,
+    paddingTop: 15,
     alignItems: "center",
     justifyContent: "center",
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 10,
+    height: 10,
   },
 });
 

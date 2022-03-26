@@ -7,9 +7,12 @@ import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Dimensions } from "react-native";
 import TasksList from "./src/components/TasksList";
 
 const Stack = createNativeStackNavigator();
+const screenWidth = Dimensions.get("screen").width;
+const screenHeight = Dimensions.get("screen").height;
 
 export default function App() {
   const [user, setUser] = useState(null);
