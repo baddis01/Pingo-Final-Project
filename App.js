@@ -2,6 +2,7 @@ import Pack from "./src/screens/Pack";
 import Packs from "./src/screens/Packs";
 import Login from "./src/screens/Login";
 import Camera from "./src/screens/Camera";
+import Photo from "./src/screens/Photo";
 import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
@@ -17,7 +18,7 @@ export default function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: '#F7Efe7'
+      background: "#F7Efe7",
     },
   };
 
@@ -31,6 +32,7 @@ export default function App() {
             <Stack.Screen name="TasksList" component={TasksList} />
             <Stack.Screen name="Pack" component={Pack} />
             <Stack.Screen name="Camera" component={Camera} />
+            <Stack.Screen name="Photo" component={Photo} />
           </Stack.Navigator>
         </UserContext.Provider>
       </NavigationContainer>

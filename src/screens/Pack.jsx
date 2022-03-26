@@ -9,18 +9,18 @@ const Pack = () => {
   const [pack, setPack] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const route = useRoute();
-  const { itemId } = route.params;
+  const { packId } = route.params;
   let [fontsLoaded] = useFonts({
     BebasNeue_400Regular,
   });
 
   useEffect(() => {
     setIsLoading(true);
-    db.getPack(itemId).then((data) => {
+    db.getPack(packId).then((data) => {
       setPack(data);
       setIsLoading(false);
     });
-  }, []);
+  }, [route.params]);
 
   if (isLoading || !fontsLoaded)
     return (
@@ -32,7 +32,12 @@ const Pack = () => {
   return (
     <View>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <TasksList style={styles.packTitle} tasks={pack.tasks} />
+      <TasksList
+        style={styles.packTitle}
+        users={pack.users}
+        tasks={pack.tasks}
+        packId={packId}
+      />
     </View>
   );
 };
