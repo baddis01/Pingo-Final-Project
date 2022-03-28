@@ -8,6 +8,10 @@ import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
+  Platform,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/UserContext";
@@ -53,17 +57,22 @@ const Login = () => {
   }
   return (
     <SafeAreaView contentContainerStyle={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
         <Image source={gamify} style={styles.cameraLogo} />
         <View style={styles.centralPage}>
           <Image source={bigDabs} style={styles.logo} />
           <View style={styles.buttons}>
             <View style={styles.textInputWrapper}>
+              <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
               <TextInput
                 onChangeText={setUserNameInput}
                 style={styles.textInput}
                 defaultValue="Name"
               />
+              </KeyboardAvoidingView>
               {/* ------buttons------- */}
               <View style={styles.buttonWrapper}>
                 <TouchableOpacity onPress={loginUser} style={styles.button}>
@@ -78,6 +87,7 @@ const Login = () => {
           </View>
         </View>
       </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };

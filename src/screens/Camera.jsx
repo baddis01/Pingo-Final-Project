@@ -13,7 +13,6 @@ const CameraComp = () => {
     params: { packId, taskId, randomDabId },
   } = useRoute();
   const { user } = useContext(UserContext);
-  //console.log(packId, taskId, user, "< camera comp info");
   const [hasPermission, setHasPermission] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -32,14 +31,12 @@ const CameraComp = () => {
   };
 
   async function uploadImageAsync(uri) {
-    // console.log(uri);
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         resolve(xhr.response);
       };
       xhr.onerror = function (e) {
-        // console.log(e);
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
