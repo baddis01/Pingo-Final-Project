@@ -22,7 +22,6 @@ const numColumns = 3;
 const tileSize = screenWidth / numColumns;
 
 export default function TasksList({ tasks, users, packId }) {
-  //console.log(packId, "< packId");
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = useContext(UserContext);
