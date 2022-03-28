@@ -25,8 +25,9 @@ const win = Dimensions.get("window");
 
 const Login = () => {
   const { user, setUser } = useContext(UserContext);
-  const [userNameInput, setUserNameInput] = useState(null);
+  const [userNameInput, setUserNameInput] = useState("");
   const navigation = useNavigation();
+  const [loginMessage, setLoginMessage] = useState("")
 
   let [fontsLoaded] = useFonts({
     BebasNeue_400Regular,
@@ -34,6 +35,18 @@ const Login = () => {
 
   if (!fontsLoaded) {
     return <AppLoading />;
+  }
+
+  validateUsername = (input) => {
+    if (input.length < 3) return false;
+    let regex = /^(?:[A-Za-z]+|\d+)$/
+    return regex.test(input)
+  }
+
+  handleChangeText = (text) => {
+    const validUser = validateUsername(userNameInput)
+    if (validUser) setLoginMessage('')
+    setUserNameInput(text)
   }
 
   function loginGuest() {
@@ -47,46 +60,61 @@ const Login = () => {
   }
 
   function loginUser() {
+    const validUser = validateUsername(userNameInput)
+    if (!validUser) {
+      setLoginMessage("invalid username")
+      return
+    }
     const newUser = {
-      username: userNameInput,
+      username: userNameInput.toLowerCase(),
     };
     setUser(() => {
       return newUser;
     });
     navigation.navigate("Packs");
   }
+
   return (
     <SafeAreaView contentContainerStyle={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View>
-        <Image source={gamify} style={styles.cameraLogo} />
-        <View style={styles.centralPage}>
-          <Image source={bigDabs} style={styles.logo} />
-          <View style={styles.buttons}>
-            <View style={styles.textInputWrapper}>
-              <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                onChangeText={setUserNameInput}
-                style={styles.textInput}
-                defaultValue="Name"
-              />
-              </KeyboardAvoidingView>
-              {/* ------buttons------- */}
-              <View style={styles.buttonWrapper}>
-                <TouchableOpacity onPress={loginUser} style={styles.button}>
-                  <Text style={styles.text}>Login</Text>
-                </TouchableOpacity>
-                <View style={styles.space} />
-                <TouchableOpacity onPress={loginGuest} style={styles.button}>
-                  <Text style={styles.text}>Guest</Text>
-                </TouchableOpacity>
+        <View>
+          <Image source={gamify} style={styles.cameraLogo} />
+          <View style={styles.centralPage}>
+            <Image source={bigDabs} style={styles.logo} />
+            <View style={styles.buttons}>
+              <View style={styles.textInputWrapper}>
+                <KeyboardAvoidingView
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    onChangeText={(text) => { handleChangeText(text) }}
+                    style={styles.textInput}
+                    defaultValue="Name"
+                    keyboardType="default"
+                    autoComplete="off"
+                    clearTextOnFocus
+                    maxLength={7}
+                    textContentType="username"
+                    spellCheck
+                    autoCapitalize="none"
+                    autoCompleteType="off"
+                  />
+                  <Text style={styles.loginText}>{loginMessage}</Text>
+                </KeyboardAvoidingView>
+                {/* ------buttons------- */}
+                <View style={styles.buttonWrapper}>
+                  <TouchableOpacity onPress={loginUser} style={styles.button}>
+                    <Text style={styles.text}>Login</Text>
+                  </TouchableOpacity>
+                  <View style={styles.space} />
+                  <TouchableOpacity onPress={loginGuest} style={styles.button}>
+                    <Text style={styles.text}>Guest</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
@@ -140,6 +168,10 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     borderColor: "#24112F",
     borderWidth: 1.25,
+  },
+  loginText: {
+    textAlign: "center",
+    paddingTop: 10,
   },
   buttons: {
     flexDirection: "column",
