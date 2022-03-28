@@ -43,6 +43,10 @@ const Login = () => {
     return regex.test(input);
   };
 
+  generateGuestUsername = () => {
+    return Math.random().toString(36).substring(2, 7);
+  };
+
   handleChangeText = (text) => {
     const validUser = validateUsername(userNameInput);
     if (validUser) setLoginMessage('');
@@ -50,8 +54,9 @@ const Login = () => {
   };
 
   function loginGuest() {
+    const Id = generateGuestUsername()
     const guestUser = {
-      username: 'Guest',
+      username: Id,
     };
     setUser(() => {
       return guestUser;
