@@ -5,9 +5,13 @@ import { useRoute } from "@react-navigation/native";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { useNavigation } from "@react-navigation/native";
+import * as db from "../db";
 
 const CameraComp = () => {
-  const { params } = useRoute();
+  const {
+    params: { packId, taskId, randomDabId },
+  } = useRoute();
   const { user } = useContext(UserContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -15,6 +19,8 @@ const CameraComp = () => {
   const [type, setType] = useState(Camera.Constants.Type.back);
 
   let camera = Camera;
+
+  const navigation = useNavigation();
 
   const __takePicture = async () => {
     if (!camera) return;
@@ -39,13 +45,14 @@ const CameraComp = () => {
     });
 
     const storage = getStorage();
-    const storageRef = ref(
-      storage,
-      `${params.packId}/${user.username}/${params.taskId}`
-    );
+    const storageRef = ref(storage, `${packId}/${user.username}/${taskId}`);
 
-    uploadBytes(storageRef, blob).then((snapshot) => {
-      console.log("Uploaded a blob or file!");
+    await uploadBytes(storageRef, blob);
+    //console.log("image uploaded");
+    await db.setTaskCompleted(packId, user.username, taskId, randomDabId);
+    //console.log("db updated");
+    navigation.navigate("Pack", {
+      packId,
     });
   }
 

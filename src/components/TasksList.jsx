@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,48 +8,77 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
-import { dab1, dab2, dab3 } from "../assets/dabs/dabindex";
+import { dab1, dab2, dab3, blank } from "../assets/dabs/dabindex";
 
-//   onPress={() => console.log("pressed task", tasks.item.id)}
-
-const dabs = [dab1, dab2, dab3];
+const defaultDabs = [dab1, dab2, dab3];
 
 // ------setting bingo card sizes------
 const screenWidth = Dimensions.get("screen").width;
 const numColumns = 3;
 const tileSize = screenWidth / numColumns;
 
-export default function TasksList({ tasks, packId }) {
+export default function TasksList({ tasks, users, packId }) {
+  //console.log(packId, "< packId");
   const navigation = useNavigation();
-  const GridView = ({ tasks }) => (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Camera", {
-          taskId: tasks.item.id,
+  const route = useRoute();
+  const { user } = useContext(UserContext);
+
+  const randomDabId = () => {
+    return Math.floor(Math.random() * defaultDabs.length);
+  };
+
+  const isTaskCompleted = (taskId) => {
+    if (typeof users === "undefined") return false;
+    if (typeof users[user.username] === "undefined") return false;
+    if (typeof users[user.username][taskId] === "undefined") return false;
+    return true;
+  };
+
+  const GridView = ({ task }) => {
+    const goToCameraOrPhoto = (taskId) => {
+      if (isTaskCompleted(taskId)) {
+        navigation.navigate("Photo", {
+          taskId: task.item.id,
           packId,
-        })
+          username: user.username,
+        });
+      } else {
+        navigation.navigate("Camera", {
+          taskId: task.item.id,
+          packId,
+          randomDabId: randomDabId(),
+        });
       }
-      style={styleSheet.gridStyle}
-    >
-      {/* ------ask someone about onpress so dabs only show when pressed ------ */}
-      <ImageBackground
-        // random coloured dabs
-        source={dabs[Math.floor(Math.random() * dabs.length)]}
-        resizeMode="contain"
-        style={styleSheet.image}
+    };
+
+    const dab = isTaskCompleted(task.item.id)
+      ? defaultDabs[users[user.username][task.item.id].dab]
+      : blank;
+    return (
+      <TouchableOpacity
+        onPress={() => goToCameraOrPhoto(task.item.id)}
+        style={styleSheet.gridStyle}
       >
-        <Text style={styleSheet.gridText}>{tasks.item.description}</Text>
-      </ImageBackground>
-    </TouchableOpacity>
-  );
+        <ImageBackground
+          source={dab}
+          resizeMode="contain"
+          style={styleSheet.image}
+        >
+          <Text style={styleSheet.gridText}>{task.item.description}</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    );
+  };
   return (
     <SafeAreaView style={styleSheet.MainContainer}>
       <FlatList
         data={tasks}
-        renderItem={(tasks) => <GridView tasks={tasks} />}
-        keyExtractor={(tasks, index) => "task" + index}
+        renderItem={(task) => <GridView task={task} />}
+        keyExtractor={(task, index) => "task" + index}
         numColumns={3}
       />
     </SafeAreaView>
