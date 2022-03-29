@@ -30,7 +30,7 @@ export default function TasksList({ tasks, users, packId }) {
     return Math.floor(Math.random() * defaultDabs.length);
   };
 
-  let dabNum = 1;
+  let dabNum = 0;
 
   const isTaskCompleted = (taskId) => {
     if (typeof users === "undefined") return false;
