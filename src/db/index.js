@@ -5,8 +5,10 @@ import {
   collection,
   getDocs,
   updateDoc,
+  GeoPoint,
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import * as Location from "expo-location";
 
 export async function getPack(id) {
   const docRef = doc(db, "packs", id);
@@ -34,6 +36,13 @@ export function getTaskPhoto(packId, username, taskId) {
 export async function setTaskCompleted(packId, username, taskId, randomDabId) {
   const packRef = doc(db, "packs", packId);
   const updateObj = {};
+
+  let { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== "granted") {
+    setErrorMsg("Permission to access location was denied");
+    return;
+  }
+
   let location = await Location.getCurrentPositionAsync({});
   updateObj[`users.${username}.${taskId}`] = {
     dab: randomDabId,

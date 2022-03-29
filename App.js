@@ -8,7 +8,7 @@ import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Dimensions } from "react-native";
+import { Dimensions, Text } from "react-native";
 import TasksList from "./src/components/TasksList";
 
 const Stack = createNativeStackNavigator();
@@ -16,7 +16,7 @@ const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ username: "not logged in" });
 
   const MyTheme = {
     ...DefaultTheme,
@@ -30,6 +30,7 @@ export default function App() {
     <>
       <NavigationContainer theme={MyTheme}>
         <UserContext.Provider value={{ user, setUser }}>
+          <Text style={{ textAlign: "center" }}>{user.username}</Text>
           <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Packs" component={Packs} />

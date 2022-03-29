@@ -59,7 +59,7 @@ const CameraComp = () => {
 
     const storage = getStorage();
     const storageRef = ref(storage, `${packId}/${user.username}/${taskId}`);
-    db.setTaskCompleted(packId, user.username, taskId, randomDabId);
+    await db.setTaskCompleted(packId, user.username, taskId, randomDabId);
     uploadBytes(storageRef, blob);
     navigation.navigate("Pack", {
       packId,

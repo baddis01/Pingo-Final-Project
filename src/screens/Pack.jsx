@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import TasksList from "../components/TasksList";
 import UsersList from "../components/UsersList";
 import Maps from "../components/Maps";
 import * as db from "../db";
 import { Text, View, StyleSheet } from "react-native";
-import { useRoute, NavigationContainer } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
+import { UserContext } from "../contexts/UserContext";
 
 const Pack = () => {
   const Tab = createBottomTabNavigator();
@@ -17,6 +18,8 @@ const Pack = () => {
   let [fontsLoaded] = useFonts({
     BebasNeue_400Regular,
   });
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,6 +35,12 @@ const Pack = () => {
         <Text>Loading...</Text>
       </View>
     );
+
+  let completedTasks = {};
+  //console.log(user.username, pack.users[user.username]);
+  if (typeof pack.users[user.username] !== "undefined") {
+    completedTasks = pack.users[user.username];
+  }
 
   return (
     <>
@@ -49,7 +58,10 @@ const Pack = () => {
           )}
         />
         <Tab.Screen name="Users" component={UsersList} />
-        <Tab.Screen name="Map" component={Maps} />
+        <Tab.Screen
+          name="Map"
+          children={() => <Maps completedTasks={completedTasks} />}
+        />
       </Tab.Navigator>
     </>
   );
