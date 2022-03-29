@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TasksList from "../components/TasksList";
 import UsersList from "../components/UsersList";
-import MapView from "../components/MapView";
+import Maps from "../components/Maps";
 import * as db from "../db";
 import { Text, View, StyleSheet } from "react-native";
 import { useRoute, NavigationContainer } from "@react-navigation/native";
@@ -33,13 +33,6 @@ const Pack = () => {
       </View>
     );
 
-  // return (
-  //   <Tab.Navigator screenOptions={{ headerShown: false }}>
-  //     <Tab.Screen name="Home" component={UsersList} />
-  //     <Tab.Screen name="Settings" component={MapView} />
-  //   </Tab.Navigator>
-  // );
-
   return (
     <>
       <Text style={styles.packTitle}> {pack.title} </Text>
@@ -56,7 +49,7 @@ const Pack = () => {
           )}
         />
         <Tab.Screen name="Users" component={UsersList} />
-        <Tab.Screen name="Map" component={MapView} />
+        <Tab.Screen name="Map" component={Maps} />
       </Tab.Navigator>
     </>
   );

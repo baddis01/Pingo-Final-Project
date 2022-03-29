@@ -34,8 +34,13 @@ export function getTaskPhoto(packId, username, taskId) {
 export async function setTaskCompleted(packId, username, taskId, randomDabId) {
   const packRef = doc(db, "packs", packId);
   const updateObj = {};
+  let location = await Location.getCurrentPositionAsync({});
   updateObj[`users.${username}.${taskId}`] = {
     dab: randomDabId,
+    coordinates: new GeoPoint(
+      location.coords.latitude,
+      location.coords.longitude
+    ),
   };
   await updateDoc(packRef, updateObj);
 }
