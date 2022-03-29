@@ -8,8 +8,6 @@ import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
-  Platform,
-  KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -38,23 +36,28 @@ const Login = () => {
     return <AppLoading />;
   }
 
-  validateUsername = (input) => {
+  const validateUsername = (input) => {
     if (input.length < 3) return false;
     let regex = /^(?:[A-Za-z]+|\d+)$/;
     return regex.test(input);
   };
 
-  generateGuestUsername = () => {
+  const formatUsername = (username) => {
+    return username.toLowerCase().trim();
+  };
+
+  const generateGuestUsername = () => {
     return Math.random().toString(36).substring(2, 7);
   };
 
-  handleChangeText = (text) => {
-    const validUser = validateUsername(userNameInput);
-    if (validUser) setLoginMessage("");
+  const handleChangeText = (text) => {
+    text = formatUsername(text);
     setUserNameInput(text);
+    const validUser = validateUsername(text);
+    if (validUser) setLoginMessage("");
   };
 
-  function loginGuest() {
+  const loginGuest = () => {
     const Id = generateGuestUsername();
     const guestUser = {
       username: Id,
@@ -63,9 +66,9 @@ const Login = () => {
       return guestUser;
     });
     navigation.navigate("Packs");
-  }
+  };
 
-  function loginUser() {
+  const loginUser = () => {
     const validUser = validateUsername(userNameInput);
     if (!validUser) {
       setLoginMessage("invalid username");
@@ -78,7 +81,7 @@ const Login = () => {
       return newUser;
     });
     navigation.navigate("Packs");
-  }
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -91,6 +94,7 @@ const Login = () => {
               <View style={styles.buttons}>
                 <View style={styles.textInputWrapper}>
                   <TextInput
+                    value={userNameInput}
                     onChangeText={(text) => {
                       handleChangeText(text);
                     }}
