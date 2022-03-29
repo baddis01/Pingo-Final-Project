@@ -3,6 +3,7 @@ import Packs from "./src/screens/Packs";
 import Login from "./src/screens/Login";
 import Camera from "./src/screens/Camera";
 import Photo from "./src/screens/Photo";
+import Celebrate from "./src/screens/Celebrate";
 import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
@@ -36,6 +37,7 @@ export default function App() {
             <Stack.Screen name="Pack" component={Pack} />
             <Stack.Screen name="Camera" component={Camera} />
             <Stack.Screen name="Photo" component={Photo} />
+            <Stack.Screen name="Celebrate" component={Celebrate} />
           </Stack.Navigator>
         </UserContext.Provider>
       </NavigationContainer>

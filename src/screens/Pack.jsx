@@ -44,7 +44,7 @@ const Pack = () => {
 
 const styles = StyleSheet.create({
   packTitle: {
-    fontSize: 70,
+    fontSize: 60,
     textAlign: "center",
     fontFamily: "BebasNeue_400Regular",
     color: "#24112F",
