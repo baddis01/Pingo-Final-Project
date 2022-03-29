@@ -24,13 +24,15 @@ const PacksList = ({ packs }) => {
     const storage = getStorage();
     const manReference = ref(storage, "/manchester.png");
     const lonReference = ref(storage, "/london.png");
+    const leeReference = ref(storage, "/leeds.jpeg");
     Promise.all([
       getDownloadURL(manReference),
       getDownloadURL(lonReference),
-    ]).then(([manUrl, lonUrl]) => {
+      getDownloadURL(leeReference),
+    ]).then(([manUrl, lonUrl, leeUrl]) => {
       setImagesLoading(false);
       setUrls(() => {
-        return { manchester: manUrl, london: lonUrl };
+        return { manchester: manUrl, london: lonUrl, leeds: leeUrl };
       });
     });
   }, []);

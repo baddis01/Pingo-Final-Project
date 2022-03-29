@@ -30,11 +30,13 @@ export default function TasksList({ tasks, users, packId }) {
     return Math.floor(Math.random() * defaultDabs.length);
   };
 
+  let dabNum = 0;
+
   const isTaskCompleted = (taskId) => {
     if (typeof users === "undefined") return false;
     if (typeof users[user.username] === "undefined") return false;
     if (typeof users[user.username][taskId] === "undefined") return false;
-    return true;
+    return true && dabNum++;
   };
 
   const GridView = ({ task }) => {
@@ -54,6 +56,10 @@ export default function TasksList({ tasks, users, packId }) {
       }
     };
 
+    if (dabNum > 11) {
+      navigation.navigate("Celebrate");
+    }
+
     const dab = isTaskCompleted(task.item.id)
       ? defaultDabs[users[user.username][task.item.id].dab]
       : blank;
@@ -72,6 +78,7 @@ export default function TasksList({ tasks, users, packId }) {
       </TouchableOpacity>
     );
   };
+
   return (
     <SafeAreaView style={styleSheet.MainContainer}>
       <FlatList
