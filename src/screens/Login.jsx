@@ -8,6 +8,10 @@ import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
+  Platform,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/UserContext";
@@ -16,13 +20,15 @@ import AppLoading from "expo-app-loading";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import bigDabs from "../assets/bigdabs.png";
 import gamify from "../assets/gamify.png";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const win = Dimensions.get("window");
 
 const Login = () => {
   const { user, setUser } = useContext(UserContext);
-  const [userNameInput, setUserNameInput] = useState(null);
+  const [userNameInput, setUserNameInput] = useState("");
   const navigation = useNavigation();
+  const [loginMessage, setLoginMessage] = useState("");
 
   let [fontsLoaded] = useFonts({
     BebasNeue_400Regular,
@@ -32,9 +38,26 @@ const Login = () => {
     return <AppLoading />;
   }
 
+  validateUsername = (input) => {
+    if (input.length < 3) return false;
+    let regex = /^(?:[A-Za-z]+|\d+)$/;
+    return regex.test(input);
+  };
+
+  generateGuestUsername = () => {
+    return Math.random().toString(36).substring(2, 7);
+  };
+
+  handleChangeText = (text) => {
+    const validUser = validateUsername(userNameInput);
+    if (validUser) setLoginMessage("");
+    setUserNameInput(text);
+  };
+
   function loginGuest() {
+    const Id = generateGuestUsername();
     const guestUser = {
-      username: "Guest",
+      username: Id,
     };
     setUser(() => {
       return guestUser;
@@ -43,42 +66,66 @@ const Login = () => {
   }
 
   function loginUser() {
+    const validUser = validateUsername(userNameInput);
+    if (!validUser) {
+      setLoginMessage("invalid username");
+      return;
+    }
     const newUser = {
-      username: userNameInput,
+      username: userNameInput.toLowerCase(),
     };
     setUser(() => {
       return newUser;
     });
     navigation.navigate("Packs");
   }
+
   return (
-    <SafeAreaView contentContainerStyle={styles.container}>
-      <View>
-        <Image source={gamify} style={styles.cameraLogo} />
-        <View style={styles.centralPage}>
-          <Image source={bigDabs} style={styles.logo} />
-          <View style={styles.buttons}>
-            <View style={styles.textInputWrapper}>
-              <TextInput
-                onChangeText={setUserNameInput}
-                style={styles.textInput}
-                defaultValue="Name"
-              />
-              {/* ------buttons------- */}
-              <View style={styles.buttonWrapper}>
-                <TouchableOpacity onPress={loginUser} style={styles.button}>
-                  <Text style={styles.text}>Login</Text>
-                </TouchableOpacity>
-                <View style={styles.space} />
-                <TouchableOpacity onPress={loginGuest} style={styles.button}>
-                  <Text style={styles.text}>Guest</Text>
-                </TouchableOpacity>
+    <KeyboardAwareScrollView>
+      <SafeAreaView contentContainerStyle={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View>
+            <Image source={gamify} style={styles.cameraLogo} />
+            <View style={styles.centralPage}>
+              <Image source={bigDabs} style={styles.logo} />
+              <View style={styles.buttons}>
+                <View style={styles.textInputWrapper}>
+                  <TextInput
+                    onChangeText={(text) => {
+                      handleChangeText(text);
+                    }}
+                    style={styles.textInput}
+                    placeholder="Name"
+                    keyboardType="default"
+                    autoComplete="off"
+                    clearTextOnFocus
+                    maxLength={7}
+                    textContentType="username"
+                    spellCheck
+                    autoCapitalize="none"
+                    autoCompleteType="off"
+                  />
+                  <Text style={styles.loginText}>{loginMessage}</Text>
+                  {/* ------buttons------- */}
+                  <View style={styles.buttonWrapper}>
+                    <TouchableOpacity onPress={loginUser} style={styles.button}>
+                      <Text style={styles.text}>Login</Text>
+                    </TouchableOpacity>
+                    <View style={styles.space} />
+                    <TouchableOpacity
+                      onPress={loginGuest}
+                      style={styles.button}
+                    >
+                      <Text style={styles.text}>Guest</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </View>
-    </SafeAreaView>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -130,6 +177,10 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     borderColor: "#24112F",
     borderWidth: 1.25,
+  },
+  loginText: {
+    textAlign: "center",
+    paddingTop: 10,
   },
   buttons: {
     flexDirection: "column",

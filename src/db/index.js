@@ -23,12 +23,10 @@ export async function getPacks() {
   return tasksList;
 }
 
-//check if an image file exists for a given task for a specific pack and user
 export function getTaskPhoto(packId, username, taskId) {
   const storage = getStorage();
   const photoRef = ref(storage, `${packId}/${username}/${taskId}`);
   return getDownloadURL(photoRef).then((photoUri) => {
-    // console.log(photoUri, "<inside getTaskPhoto");
     return photoUri;
   });
 }

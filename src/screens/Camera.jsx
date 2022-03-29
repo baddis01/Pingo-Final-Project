@@ -7,13 +7,13 @@ import { UserContext } from "../contexts/UserContext";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { useNavigation } from "@react-navigation/native";
 import * as db from "../db";
+import CameraPreview from "./CameraPreview";
 
 const CameraComp = () => {
   const {
     params: { packId, taskId, randomDabId },
   } = useRoute();
   const { user } = useContext(UserContext);
-  //console.log(packId, taskId, user, "< camera comp info");
   const [hasPermission, setHasPermission] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -23,23 +23,33 @@ const CameraComp = () => {
 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
   const __takePicture = async () => {
     if (!camera) return;
     const photo = await camera.takePictureAsync();
-    setPreviewVisible(true);
     setCapturedImage(photo);
-    uploadImageAsync(photo.uri);
+    setPreviewVisible(true);
+    //__savePhoto(photo.uri);
   };
 
-  async function uploadImageAsync(uri) {
-    // console.log(uri);
+  const __retakePicture = () => {
+    setCapturedImage(null);
+    setPreviewVisible(false);
+  };
+
+  async function __savePhoto(uri) {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         resolve(xhr.response);
       };
       xhr.onerror = function (e) {
-        // console.log(e);
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
@@ -49,28 +59,30 @@ const CameraComp = () => {
 
     const storage = getStorage();
     const storageRef = ref(storage, `${packId}/${user.username}/${taskId}`);
-
-    await uploadBytes(storageRef, blob);
-    //console.log("image uploaded");
-    await db.setTaskCompleted(packId, user.username, taskId, randomDabId);
-    //console.log("db updated");
+    db.setTaskCompleted(packId, user.username, taskId, randomDabId);
+    uploadBytes(storageRef, blob);
     navigation.navigate("Pack", {
       packId,
+      completedTask: taskId,
     });
   }
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
 
   if (hasPermission === null) {
     return <View />;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
+  }
+
+  if (previewVisible && capturedImage) {
+    return (
+      <CameraPreview
+        photo={capturedImage}
+        savePhoto={__savePhoto}
+        retakePicture={__retakePicture}
+        styles={styles}
+      />
+    );
   }
 
   return (
@@ -136,6 +148,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
+    color: "white",
+  },
+  previewText: {
+    fontSize: 24,
     color: "white",
   },
   buttonContainer: {
