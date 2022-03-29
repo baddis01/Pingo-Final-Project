@@ -42,11 +42,8 @@ const Login = () => {
     return regex.test(input);
   };
 
-  //this function trims the whitespace off
-  //and capitalises first letter of the username with the rest in lowercase
   const formatUsername = (username) => {
-    username = username.toLowerCase().trim();
-    return username.charAt(0).toUpperCase() + username.slice(1);
+    return username.toLowerCase().trim();
   };
 
   const generateGuestUsername = () => {
@@ -55,7 +52,6 @@ const Login = () => {
 
   const handleChangeText = (text) => {
     text = formatUsername(text);
-    console.log(text);
     setUserNameInput(text);
     const validUser = validateUsername(text);
     if (validUser) setLoginMessage("");

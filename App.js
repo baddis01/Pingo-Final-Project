@@ -30,7 +30,7 @@ export default function App() {
     <>
       <NavigationContainer theme={MyTheme}>
         <UserContext.Provider value={{ user, setUser }}>
-          <Text style={{ textAlign: "center" }}>{user.username}</Text>
+          {/* <Text style={{ textAlign: "center" }}>'{user.username}'</Text> */}
           <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Packs" component={Packs} />
