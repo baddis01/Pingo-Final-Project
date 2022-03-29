@@ -21,6 +21,13 @@ const Packs = () => {
         });
     }, []);
 
+    if (isLoading || !fontsLoaded)
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        );
+
     return (
         <View>
             <Text style={styles.packList}>All Packs</Text>
@@ -37,10 +44,6 @@ const styles = StyleSheet.create({
         marginBottom: 25,
         color: '#24112F',
 
-    },
-    lottie: {
-        width: 100,
-        height: 100,
     },
 
 })

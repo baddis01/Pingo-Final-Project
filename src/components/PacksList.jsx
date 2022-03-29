@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
+import AppLoading from "expo-app-loading";
 import React, { useEffect, useState } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import AnimatedLoader from 'react-native-animated-loader';
 
 const PacksList = ({ packs }) => {
   const navigation = useNavigation();
@@ -42,12 +42,7 @@ const PacksList = ({ packs }) => {
   });
 
   if (!fontsLoaded || imagesLoading) {
-    return < AnimatedLoader
-      visible={true}
-      source={require('../assets/lf30_editor_qngy49ar.json')}
-      animationStyle={styles.lottie}
-      speed={1}
-    />
+    return <AppLoading />;
   }
 
   return (
@@ -99,10 +94,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
-  },
-  lottie: {
-    width: 100,
-    height: 100,
   },
 });
 
