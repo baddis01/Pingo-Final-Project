@@ -8,7 +8,7 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
@@ -21,22 +21,35 @@ const screenWidth = Dimensions.get("screen").width;
 const numColumns = 3;
 const tileSize = screenWidth / numColumns;
 
-export default function TasksList({ tasks, users, packId }) {
+export default function TasksList({ tasks, users, packId, packSize }) {
   const navigation = useNavigation();
-  const route = useRoute();
   const { user } = useContext(UserContext);
+  const [dabsNum, setDabsNum] = useState(0);
+  const [shownCelebration, setShownCelebration] = useState(false);
 
   const randomDabId = () => {
     return Math.floor(Math.random() * defaultDabs.length);
   };
 
-  let dabNum = 0;
+  useEffect(() => {
+    tasks.forEach((task) => {
+      if (isTaskCompleted(task.id)) {
+        setDabsNum((curr) => curr + 1);
+      }
+    });
+  }, []);
+  //console.log(dabsNum, "< num of dabs, packsize", packSize);
 
+  if (dabsNum >= packSize) {
+    if (!shownCelebration) {
+      setShownCelebration(true);
+      navigation.navigate("Celebrate");
+    }
+  }
   const isTaskCompleted = (taskId) => {
     if (typeof users === "undefined") return false;
     if (typeof users[user.username] === "undefined") return false;
     if (typeof users[user.username][taskId] === "undefined") return false;
-    dabNum++;
     return true;
   };
 
@@ -56,10 +69,6 @@ export default function TasksList({ tasks, users, packId }) {
         });
       }
     };
-
-    if (dabNum > 11) {
-      navigation.navigate("Celebrate");
-    }
 
     const dab = isTaskCompleted(task.item.id)
       ? defaultDabs[users[user.username][task.item.id].dab]

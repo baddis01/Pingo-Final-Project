@@ -63,6 +63,7 @@ const Pack = () => {
               users={pack.users}
               tasks={pack.tasks}
               packId={packId}
+              packSize={pack.tasks.length}
             />
           )}
         />
