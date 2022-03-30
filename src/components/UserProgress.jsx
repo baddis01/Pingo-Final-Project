@@ -1,4 +1,5 @@
 import { Text } from "react-native";
+import * as Progress from "react-native-progress";
 
 const UserProgress = ({ user, username, packSize }) => {
   if (username == "duncan") {
@@ -7,9 +8,12 @@ const UserProgress = ({ user, username, packSize }) => {
   let completedTasksCount = Object.keys(user).length;
 
   return (
-    <Text>
-      '{username}' has completed : {completedTasksCount}/{packSize}
-    </Text>
+    <>
+      <Text>
+        '{username}' has completed : {completedTasksCount}/{packSize}
+      </Text>
+      <Progress.Bar progress={0.3} width={200} />
+    </>
   );
 };
 
