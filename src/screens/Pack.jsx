@@ -73,7 +73,9 @@ const Pack = () => {
               <FontAwesome5 name="users" size={24} color="#24112F" />
             ),
           }}
-          component={UsersList}
+          children={() => (
+            <UsersList users={pack.users} packSize={pack.tasks.length} />
+          )}
         />
         <Tab.Screen
           name="Map"
