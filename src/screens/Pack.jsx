@@ -8,6 +8,7 @@ import { useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import { UserContext } from "../contexts/UserContext";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Pack = () => {
   const Tab = createBottomTabNavigator();
@@ -48,9 +49,14 @@ const Pack = () => {
   return (
     <>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator screenOptions={{ headerShown: false }} colour="red">
         <Tab.Screen
           name="Tasks"
+          options={{
+            tabBarIcon: () => (
+              <FontAwesome5 name="tasks" size={24} color="#24112F" />
+            ),
+          }}
           children={() => (
             <TasksList
               style={styles.packTitle}
@@ -60,9 +66,22 @@ const Pack = () => {
             />
           )}
         />
-        <Tab.Screen name="Users" component={UsersList} />
+        <Tab.Screen
+          name="Users"
+          options={{
+            tabBarIcon: () => (
+              <FontAwesome5 name="users" size={24} color="#24112F" />
+            ),
+          }}
+          component={UsersList}
+        />
         <Tab.Screen
           name="Map"
+          options={{
+            tabBarIcon: () => (
+              <FontAwesome5 name="map-marker-alt" size={24} color="#24112F" />
+            ),
+          }}
           children={() => <Maps completedTasks={completedTasks} />}
         />
       </Tab.Navigator>
