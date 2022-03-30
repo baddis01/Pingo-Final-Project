@@ -43,7 +43,7 @@ const PacksList = ({ packs }) => {
         return {
           london: lonUrl,
           stadium: stadUrl,
-          house: houseUrl,
+          household: houseUrl,
           manchester: manUrl,
           random: ranUrl,
           leeds: leeUrl,
