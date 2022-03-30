@@ -30,24 +30,24 @@ const PacksList = ({ packs }) => {
     const sprReference = ref(storage, "/spring.jpg");
     const houseReference = ref(storage, "/household.png")
     Promise.all([
-      getDownloadURL(manReference),
       getDownloadURL(lonReference),
-      getDownloadURL(leeReference),
       getDownloadURL(stadiumReference),
+      getDownloadURL(houseReference),
+      getDownloadURL(manReference),
       getDownloadURL(randomReference),
+      getDownloadURL(leeReference),
       getDownloadURL(sprReference),
-      getDownloadURL(houseReference)
-    ]).then(([manUrl, lonUrl, leeUrl, sprUrl, houseUrl, stadUrl, ranUrl]) => {
+    ]).then(([lonUrl, stadUrl, houseUrl, manUrl, ranUrl, leeUrl, sprUrl]) => {
       setImagesLoading(false);
       setUrls(() => {
         return {
-          manchester: manUrl,
           london: lonUrl,
-          leeds: leeUrl,
           stadium: stadUrl,
+          house: houseUrl,
+          manchester: manUrl,
           random: ranUrl,
+          leeds: leeUrl,
           spring: sprUrl,
-          house: houseUrl
         };
       });
     });
@@ -87,11 +87,12 @@ const PacksList = ({ packs }) => {
                 }
               >
                 <Text style={styles.packs}>{item.data.title}</Text>
+
+                <Image
+                  style={styles.imagestyle}
+                  source={{ uri: urls[item.data.image] }}
+                />
               </TouchableOpacity>
-              <Image
-                style={styles.imagestyle}
-                source={{ uri: urls[item.data.image] }}
-              />
             </View>
           );
         }}
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "BebasNeue_400Regular",
     marginTop: 10,
+    color: '#24112F'
   },
   imagestyle: {
     flex: 1,
