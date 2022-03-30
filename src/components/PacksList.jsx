@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import React, { useEffect, useState } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import AnimatedLoader from 'react-native-animated-loader';
+import AnimatedLoader from "react-native-animated-loader";
 
 const PacksList = ({ packs }) => {
   const navigation = useNavigation();
@@ -25,14 +25,24 @@ const PacksList = ({ packs }) => {
     const manReference = ref(storage, "/manchester.png");
     const lonReference = ref(storage, "/london.png");
     const leeReference = ref(storage, "/leeds.jpeg");
+    const stadiumReference = ref(storage, "/stadium.jpeg");
+    const randomReference = ref(storage, "/random.jpg");
     Promise.all([
       getDownloadURL(manReference),
       getDownloadURL(lonReference),
       getDownloadURL(leeReference),
-    ]).then(([manUrl, lonUrl, leeUrl]) => {
+      getDownloadURL(stadiumReference),
+      getDownloadURL(randomReference),
+    ]).then(([manUrl, lonUrl, leeUrl, stadUrl, ranUrl]) => {
       setImagesLoading(false);
       setUrls(() => {
-        return { manchester: manUrl, london: lonUrl, leeds: leeUrl };
+        return {
+          manchester: manUrl,
+          london: lonUrl,
+          leeds: leeUrl,
+          stadium: stadUrl,
+          random: ranUrl,
+        };
       });
     });
   }, []);
@@ -42,12 +52,14 @@ const PacksList = ({ packs }) => {
   });
 
   if (!fontsLoaded || imagesLoading) {
-    return < AnimatedLoader
-      visible={true}
-      source={require('../assets/lf30_editor_qngy49ar.json')}
-      animationStyle={styles.lottie}
-      speed={1}
-    />
+    return (
+      <AnimatedLoader
+        visible={true}
+        source={require("../assets/lf30_editor_qngy49ar.json")}
+        animationStyle={styles.lottie}
+        speed={1}
+      />
+    );
   }
 
   return (
