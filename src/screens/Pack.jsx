@@ -60,7 +60,12 @@ const Pack = () => {
             />
           )}
         />
-        <Tab.Screen name="Users" component={UsersList} />
+        <Tab.Screen
+          name="Users"
+          children={() => (
+            <UsersList users={pack.users} packSize={pack.tasks.length} />
+          )}
+        />
         <Tab.Screen
           name="Map"
           children={() => <Maps completedTasks={completedTasks} />}
