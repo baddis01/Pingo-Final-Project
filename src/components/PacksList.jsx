@@ -26,13 +26,15 @@ const PacksList = ({ packs }) => {
     const lonReference = ref(storage, "/london.png");
     const leeReference = ref(storage, "/leeds.jpeg");
     const sprReference = ref(storage, "/spring.jpg");
+    const houseReference = ref(storage, "/household.png")
 
     Promise.all([
       getDownloadURL(manReference),
       getDownloadURL(lonReference),
       getDownloadURL(leeReference),
       getDownloadURL(sprReference),
-    ]).then(([manUrl, lonUrl, leeUrl, sprUrl]) => {
+      getDownloadURL(houseReference)
+    ]).then(([manUrl, lonUrl, leeUrl, sprUrl, houseUrl]) => {
       setImagesLoading(false);
       setUrls(() => {
         return {
@@ -40,6 +42,7 @@ const PacksList = ({ packs }) => {
           london: lonUrl,
           leeds: leeUrl,
           spring: sprUrl,
+          house: houseUrl
         };
       });
     });
