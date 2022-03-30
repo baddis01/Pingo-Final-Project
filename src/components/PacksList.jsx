@@ -27,13 +27,17 @@ const PacksList = ({ packs }) => {
     const leeReference = ref(storage, "/leeds.jpeg");
     const stadiumReference = ref(storage, "/stadium.jpeg");
     const randomReference = ref(storage, "/random.jpg");
+    const sprReference = ref(storage, "/spring.jpg");
+    const houseReference = ref(storage, "/household.png")
     Promise.all([
       getDownloadURL(manReference),
       getDownloadURL(lonReference),
       getDownloadURL(leeReference),
       getDownloadURL(stadiumReference),
       getDownloadURL(randomReference),
-    ]).then(([manUrl, lonUrl, leeUrl, stadUrl, ranUrl]) => {
+      getDownloadURL(sprReference),
+      getDownloadURL(houseReference)
+    ]).then(([manUrl, lonUrl, leeUrl, sprUrl, houseUrl, stadUrl, ranUrl]) => {
       setImagesLoading(false);
       setUrls(() => {
         return {
@@ -42,6 +46,8 @@ const PacksList = ({ packs }) => {
           leeds: leeUrl,
           stadium: stadUrl,
           random: ranUrl,
+          spring: sprUrl,
+          house: houseUrl
         };
       });
     });

@@ -1,13 +1,24 @@
-import { useRoute } from "@react-navigation/native";
-import { View, Text } from "react-native";
+import { SafeAreaView, FlatList } from "react-native";
+import UserProgress from "./UserProgress";
 
-const UsersList = () => {
-  const { params } = useRoute();
-
+const UsersList = ({ users, packSize }) => {
+  const usersArr = Object.entries(users);
   return (
-    <View>
-      <Text>Users</Text>
-    </View>
+    <SafeAreaView>
+      <FlatList
+        data={usersArr}
+        keyExtractor={(user, index) => {
+          return "user" + index;
+        }}
+        renderItem={(user) => (
+          <UserProgress
+            username={user.item[0]}
+            user={user.item[1]}
+            packSize={packSize}
+          />
+        )}
+      />
+    </SafeAreaView>
   );
 };
 
