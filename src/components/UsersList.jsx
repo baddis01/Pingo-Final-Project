@@ -2,7 +2,9 @@ import { SafeAreaView, FlatList } from "react-native";
 import UserProgress from "./UserProgress";
 
 const UsersList = ({ users, packSize }) => {
-  const usersArr = Object.entries(users);
+  let usersArr;
+  if (users === null || typeof users === "undefined") usersArr = [];
+  else usersArr = Object.entries(users);
   return (
     <SafeAreaView>
       <FlatList
