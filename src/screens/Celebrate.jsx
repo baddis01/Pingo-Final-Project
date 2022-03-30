@@ -9,16 +9,21 @@ import {
 import pingodone from "../assets/pingodone.png";
 import Confetti from "../components/Confetti";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
+import { UserContext } from "../contexts/UserContext";
+import { useContext } from "react";
 
 const win = Dimensions.get("window");
 
 const Celebrate = () => {
+  const { user } = useContext(UserContext);
   return (
     <SafeAreaView style={styles.MainContainer}>
       <View style={styles.MainContainer}>
         <View style={styles.cardView}>
           <Image source={pingodone} style={styles.logo} />
-          <Text style={styles.text}>YOU DID IT!</Text>
+          <Text style={styles.text}>
+            CONGRATULATIONS {user.username} YOU DID IT!
+          </Text>
         </View>
         <Confetti />
       </View>
