@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
+import AnimatedLoader from "react-native-animated-loader";
 
 const Pack = () => {
   const Tab = createBottomTabNavigator();
@@ -32,9 +33,12 @@ const Pack = () => {
 
   if (isLoading || !fontsLoaded)
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+      <AnimatedLoader
+        visible={true}
+        source={require("../assets/lf30_editor_qngy49ar.json")}
+        animationStyle={styles.lottie}
+        speed={1}
+      />
     );
 
   let completedTasks = {};
