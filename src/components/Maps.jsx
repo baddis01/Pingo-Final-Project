@@ -22,30 +22,32 @@ const Maps = ({ completedTasks }) => {
         return;
       }
     };
-    console.log(arrayOfCords, "<array of all cords");
   });
 
   return (
     <SafeAreaView>
-      <MapView provider={PROVIDER_GOOGLE} style={styles.map}>
-        {/* <Marker
-                    icon={"./assets/markers/transparent"}
-                    coordinate={}
-                >
-                    <Image
-                        source={require("../assets/markers/marker-01.png")}
-                        style={{ height: 40, width: 30 }}
-                    />
-                </Marker> */}
-        <Marker
-          icon={"./assets/markers/transparent"}
-          coordinate={{ latitude: 53.481, longitude: -2.2369 }}
-        >
-          <Image
-            source={require("../assets/markers/marker-01.png")}
-            style={{ height: 40, width: 30 }}
-          />
-        </Marker>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        initialRegion={{
+          latitude: 52.45506556696268,
+          longitude: -4.1454631333560976,
+          latitudeDelta: -4,
+          longitudeDelta: 12,
+        }}
+      >
+        {arrayOfCords.map((marker, index) => (
+          <Marker
+            coordinate={{ latitude: marker[0], longitude: marker[1] }}
+            title={marker.title}
+            key={index}
+          >
+            <Image
+              source={require("../assets/markers/marker-01.png")}
+              style={{ height: 40, width: 30 }}
+            />
+          </Marker>
+        ))}
       </MapView>
     </SafeAreaView>
   );
