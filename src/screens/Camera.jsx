@@ -35,7 +35,6 @@ const CameraComp = () => {
     const photo = await camera.takePictureAsync();
     setCapturedImage(photo);
     setPreviewVisible(true);
-    //__savePhoto(photo.uri);
   };
 
   const __retakePicture = () => {

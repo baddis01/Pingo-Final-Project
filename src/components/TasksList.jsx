@@ -16,7 +16,6 @@ import { dab1, dab2, dab3, blank } from "../assets/dabs/dabindex";
 
 const defaultDabs = [dab1, dab2, dab3];
 
-// ------setting bingo card sizes------
 const screenWidth = Dimensions.get("screen").width;
 const numColumns = 3;
 const tileSize = screenWidth / numColumns;
@@ -38,7 +37,6 @@ export default function TasksList({ tasks, users, packId, packSize }) {
       }
     });
   }, []);
-  //console.log(dabsNum, "< num of dabs, packsize", packSize);
 
   if (dabsNum >= packSize) {
     if (!shownCelebration) {
@@ -130,6 +128,5 @@ const styleSheet = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center",
-    // resizeMode: "cover",
   },
 });
