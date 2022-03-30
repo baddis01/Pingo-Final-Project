@@ -36,7 +36,8 @@ export default function TasksList({ tasks, users, packId }) {
     if (typeof users === "undefined") return false;
     if (typeof users[user.username] === "undefined") return false;
     if (typeof users[user.username][taskId] === "undefined") return false;
-    return true && dabNum++;
+    dabNum++;
+    return true;
   };
 
   const GridView = ({ task }) => {
