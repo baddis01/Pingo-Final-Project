@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import * as db from "../db";
 
@@ -11,6 +11,8 @@ const Photo = () => {
   const [image, setImage] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
+  const win = Dimensions.get("window");
+
   useEffect(() => {
     setIsLoading(true);
     db.getTaskPhoto(packId, username, taskId).then((image) => {
@@ -21,9 +23,8 @@ const Photo = () => {
 
   if (isLoading) return <Text>Loading ....</Text>;
 
-  //console.log(image);
   return (
-    <View>
+    <View style={styles.imgContainer}>
       <Image style={styles.imagestyle} source={{ uri: image }} />
     </View>
   );
@@ -31,14 +32,12 @@ const Photo = () => {
 
 const styles = StyleSheet.create({
   imagestyle: {
+    resizeMode: "contain",
     flex: 1,
-    width: null,
-    height: 1000,
-    paddingTop: 25,
-    paddingBottom: 100,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 10,
+    aspectRatio: 0.55,
+  },
+  imgContainer: {
+    flexDirection: "row",
   },
 });
 
