@@ -42,7 +42,7 @@ const Pack = () => {
     );
 
   let completedTasks = {};
-  //console.log(user.username, pack.users[user.username]);
+
   if (
     typeof pack.users !== "undefined" &&
     typeof pack.users[user.username] !== "undefined"
