@@ -53,14 +53,21 @@ const Pack = () => {
   return (
     <>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <Tab.Navigator screenOptions={{ headerShown: false }} colour="red">
+      <Tab.Navigator
+        screenOptions={{ headerShown: false, tabBarActiveTintColor: "#fc8800" }}
+        colour="red"
+      >
         <Tab.Screen
           name="Tasks"
-          options={{
-            tabBarIcon: () => (
-              <FontAwesome5 name="tasks" size={24} color="#24112F" />
+          options={() => ({
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="tasks"
+                size={24}
+                color={focused ? "#fc8800" : "#24112F"}
+              />
             ),
-          }}
+          })}
           children={() => (
             <TasksList
               style={styles.packTitle}
@@ -74,8 +81,12 @@ const Pack = () => {
         <Tab.Screen
           name="Users"
           options={{
-            tabBarIcon: () => (
-              <FontAwesome5 name="users" size={24} color="#24112F" />
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="users"
+                size={24}
+                color={focused ? "#fc8800" : "#24112F"}
+              />
             ),
           }}
           children={() => (
@@ -85,8 +96,12 @@ const Pack = () => {
         <Tab.Screen
           name="Map"
           options={{
-            tabBarIcon: () => (
-              <FontAwesome5 name="map-marker-alt" size={24} color="#24112F" />
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="map-marker-alt"
+                size={24}
+                color={focused ? "#fc8800" : "#24112F"}
+              />
             ),
           }}
           children={() => <Maps completedTasks={completedTasks} />}
