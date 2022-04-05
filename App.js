@@ -6,20 +6,15 @@ import Photo from "./src/screens/Photo";
 import Celebrate from "./src/screens/Celebrate";
 import { UserContext } from "./src/contexts/UserContext";
 import { useState } from "react";
-import {
-  NavigationContainer,
-  DefaultTheme,
-  Button,
-} from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Dimensions, Text } from "react-native";
+import { StyleSheet, Text, LogBox, View } from "react-native";
 import TasksList from "./src/components/TasksList";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-console.disableYellowBox = true;
+LogBox.ignoreAllLogs(true);
 
 const Stack = createNativeStackNavigator();
-const screenWidth = Dimensions.get("screen").width;
-const screenHeight = Dimensions.get("screen").height;
 
 export default function App() {
   const [user, setUser] = useState({ username: "" });
@@ -32,31 +27,41 @@ export default function App() {
     },
   };
 
-  const headerOptions = {
+  const header = {
     headerRight: () => {
-      return <Text>{user.username}</Text>;
+      return (
+        <>
+          <View style={{ justifyContent: "center", flexDirection: "row" }}>
+            <Text>{user.username} </Text>
+          </View>
+          <FontAwesome5 name="user-circle" size={24} color="#24112F" />
+        </>
+      );
     },
   };
 
   return (
-    <>
-      <NavigationContainer theme={MyTheme}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen
-              name="Packs"
-              component={Packs}
-              options={headerOptions}
-            />
-            <Stack.Screen name="TasksList" component={TasksList} />
-            <Stack.Screen name="Pack" component={Pack} />
-            <Stack.Screen name="Camera" component={Camera} />
-            <Stack.Screen name="Photo" component={Photo} />
-            <Stack.Screen name="Celebrate" component={Celebrate} />
-          </Stack.Navigator>
-        </UserContext.Provider>
-      </NavigationContainer>
-    </>
+    <NavigationContainer theme={MyTheme}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Packs" component={Packs} options={header} />
+          <Stack.Screen name="Pack" component={Pack} options={header} />
+          <Stack.Screen name="Camera" component={Camera} options={header} />
+          <Stack.Screen name="Photo" component={Photo} options={header} />
+          <Stack.Screen
+            name="Celebrate"
+            component={Celebrate}
+            options={header}
+          />
+        </Stack.Navigator>
+      </UserContext.Provider>
+    </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  profileText: {
+    alignItems: "center",
+  },
+});
