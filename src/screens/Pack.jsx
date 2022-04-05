@@ -55,7 +55,7 @@ const Pack = () => {
             tabBarIcon: ({ focused }) => (
               <FontAwesome5
                 name="tasks"
-                size={24}
+                size={focused ? 22 : 20}
                 color={focused ? "#fc8800" : "#24112F"}
               />
             ),
@@ -76,7 +76,7 @@ const Pack = () => {
             tabBarIcon: ({ focused }) => (
               <FontAwesome5
                 name="users"
-                size={24}
+                size={focused ? 22 : 20}
                 color={focused ? "#fc8800" : "#24112F"}
               />
             ),
@@ -91,7 +91,7 @@ const Pack = () => {
             tabBarIcon: ({ focused }) => (
               <FontAwesome5
                 name="map-marker-alt"
-                size={24}
+                size={focused ? 22 : 20}
                 color={focused ? "#fc8800" : "#24112F"}
               />
             ),
