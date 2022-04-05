@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Loading from "../components/Loader";
+import Loading from "../components/Loading";
 
 const Pack = () => {
   const Tab = createBottomTabNavigator();
