@@ -3,13 +3,13 @@ import TasksList from "../components/TasksList";
 import UsersList from "../components/UsersList";
 import Maps from "../components/Maps";
 import * as db from "../db";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AnimatedLoader from "react-native-animated-loader";
+import Loading from "../components/Loader";
 
 const Pack = () => {
   const Tab = createBottomTabNavigator();
@@ -31,15 +31,7 @@ const Pack = () => {
     });
   }, [route.params]);
 
-  if (isLoading || !fontsLoaded)
-    return (
-      <AnimatedLoader
-        visible={true}
-        source={require("../assets/lf30_editor_qngy49ar.json")}
-        animationStyle={styles.lottie}
-        speed={1}
-      />
-    );
+  if (isLoading || !fontsLoaded) return <Loading />;
 
   let completedTasks = {};
 
