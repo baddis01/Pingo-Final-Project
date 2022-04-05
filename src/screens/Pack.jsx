@@ -3,13 +3,13 @@ import TasksList from "../components/TasksList";
 import UsersList from "../components/UsersList";
 import Maps from "../components/Maps";
 import * as db from "../db";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AnimatedLoader from "react-native-animated-loader";
+import Loading from "../components/Loading";
 
 const Pack = () => {
   const Tab = createBottomTabNavigator();
@@ -31,15 +31,7 @@ const Pack = () => {
     });
   }, [route.params]);
 
-  if (isLoading || !fontsLoaded)
-    return (
-      <AnimatedLoader
-        visible={true}
-        source={require("../assets/lf30_editor_qngy49ar.json")}
-        animationStyle={styles.lottie}
-        speed={1}
-      />
-    );
+  if (isLoading || !fontsLoaded) return <Loading />;
 
   let completedTasks = {};
 
@@ -53,14 +45,21 @@ const Pack = () => {
   return (
     <>
       <Text style={styles.packTitle}> {pack.title} </Text>
-      <Tab.Navigator screenOptions={{ headerShown: false }} colour="red">
+      <Tab.Navigator
+        screenOptions={{ headerShown: false, tabBarActiveTintColor: "#fc8800" }}
+        colour="red"
+      >
         <Tab.Screen
           name="Tasks"
-          options={{
-            tabBarIcon: () => (
-              <FontAwesome5 name="tasks" size={24} color="#24112F" />
+          options={() => ({
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="tasks"
+                size={focused ? 22 : 20}
+                color={focused ? "#fc8800" : "#24112F"}
+              />
             ),
-          }}
+          })}
           children={() => (
             <TasksList
               style={styles.packTitle}
@@ -74,8 +73,12 @@ const Pack = () => {
         <Tab.Screen
           name="Users"
           options={{
-            tabBarIcon: () => (
-              <FontAwesome5 name="users" size={24} color="#24112F" />
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="users"
+                size={focused ? 22 : 20}
+                color={focused ? "#fc8800" : "#24112F"}
+              />
             ),
           }}
           children={() => (
@@ -85,8 +88,12 @@ const Pack = () => {
         <Tab.Screen
           name="Map"
           options={{
-            tabBarIcon: () => (
-              <FontAwesome5 name="map-marker-alt" size={24} color="#24112F" />
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="map-marker-alt"
+                size={focused ? 22 : 20}
+                color={focused ? "#fc8800" : "#24112F"}
+              />
             ),
           }}
           children={() => <Maps completedTasks={completedTasks} />}

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import AnimatedLoader from "react-native-animated-loader";
 
 import * as db from "../db";
+import Loading from "../components/Loading";
 
 const Photo = () => {
   const {
@@ -23,17 +23,7 @@ const Photo = () => {
     });
   }, []);
 
-  if (isLoading)
-    return (
-      <Text>
-        <AnimatedLoader
-          visible={true}
-          source={require("../assets/lf30_editor_qngy49ar.json")}
-          animationStyle={styles.lottie}
-          speed={1}
-        />
-      </Text>
-    );
+  if (isLoading) return <Loading />;
 
   return (
     <View style={styles.imgContainer}>

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import PacksList from "../components/PacksList";
 import * as db from "../db";
-import { Text, View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { useFonts, BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
+import Loading from "../components/Loading";
 
 const Packs = () => {
   const [packs, setPacks] = useState([]);
@@ -15,10 +16,15 @@ const Packs = () => {
   useEffect(() => {
     setIsLoading(true);
     db.getPacks().then((data) => {
+      data.sort((a, b) => a.data.order - b.data.order);
       setPacks(data);
       setIsLoading(false);
     });
   }, []);
+
+  if (isLoading || !fontsLoaded) {
+    return <Loading />;
+  }
 
   return (
     <View>
@@ -26,19 +32,5 @@ const Packs = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  packList: {
-    fontSize: 75,
-    textAlign: "center",
-    fontFamily: "BebasNeue_400Regular",
-    marginBottom: 25,
-    color: "#24112F",
-  },
-  lottie: {
-    width: 100,
-    height: 100,
-  },
-});
 
 export default Packs;

@@ -38,7 +38,7 @@ const Login = () => {
 
   const validateUsername = (input) => {
     if (input.length < 3) return false;
-    let regex = /^(?:[A-Za-z]+|\d+)$/;
+    let regex = /^[a-z0-9]+$/i;
     return regex.test(input);
   };
 
@@ -58,13 +58,14 @@ const Login = () => {
   };
 
   const loginGuest = () => {
-    const Id = generateGuestUsername();
+    const randomUsername = generateGuestUsername();
     const guestUser = {
-      username: Id,
+      username: randomUsername,
     };
     setUser(() => {
       return guestUser;
     });
+    setUserNameInput(randomUsername);
     navigation.navigate("Packs");
   };
 
@@ -75,7 +76,7 @@ const Login = () => {
       return;
     }
     const newUser = {
-      username: userNameInput.toLowerCase(),
+      username: formatUsername(userNameInput),
     };
     setUser(() => {
       return newUser;
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 10,
-    paddingBottom: 100,
+    paddingBottom: 10,
     color: "#F7Efe7",
     textAlign: "center",
     fontFamily: "BebasNeue_400Regular",
@@ -185,6 +186,7 @@ const styles = StyleSheet.create({
   loginText: {
     textAlign: "center",
     paddingTop: 10,
+    color: "#fc8800",
   },
   buttons: {
     flexDirection: "column",
