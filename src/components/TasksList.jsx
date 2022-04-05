@@ -23,7 +23,6 @@ const tileSize = screenWidth / numColumns;
 export default function TasksList({ tasks, users, packId, packSize }) {
   const navigation = useNavigation();
   const { user } = useContext(UserContext);
-  const [dabsNum, setDabsNum] = useState(0);
   const [shownCelebration, setShownCelebration] = useState(false);
 
   const randomDabId = () => {
@@ -31,19 +30,20 @@ export default function TasksList({ tasks, users, packId, packSize }) {
   };
 
   useEffect(() => {
+    let dabsCount = 0;
     tasks.forEach((task) => {
       if (isTaskCompleted(task.id)) {
-        setDabsNum((curr) => curr + 1);
+        dabsCount++;
       }
     });
+    if (dabsCount >= packSize) {
+      if (!shownCelebration) {
+        setShownCelebration(true);
+        navigation.navigate("Celebrate");
+      }
+    }
   }, []);
 
-  if (dabsNum >= packSize) {
-    if (!shownCelebration) {
-      setShownCelebration(true);
-      navigation.navigate("Celebrate");
-    }
-  }
   const isTaskCompleted = (taskId) => {
     if (typeof users === "undefined") return false;
     if (typeof users[user.username] === "undefined") return false;

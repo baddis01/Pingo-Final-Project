@@ -38,7 +38,7 @@ const Login = () => {
 
   const validateUsername = (input) => {
     if (input.length < 3) return false;
-    let regex = /^(?:[A-Za-z]+|\d+)$/;
+    let regex = /^[a-z0-9]+$/i;
     return regex.test(input);
   };
 
