@@ -4,6 +4,13 @@ This is the final project for Northcoders full-stack software development bootca
 
 **Pingo** is a photo bingo mobile application built with React Native and Firebase. It mixes the excitement of a photo scavenger hunt with the novelty of a classic bingo game!
 
+![application-homepage](assets/product/homepage.png)
+![bingo-pack](assets/product/packs.png)
+![bingo-dabs](assets/product/dabs.png)
+![bingo-congrats](assets/product/congrats.png)
+![map](assets/product/map.png)
+![progress](assets/product/progress.png)
+
 ## How does it work?
 
 Designed to encourage people to explore and photograph their adventures, Pingo prompts users to visit certain attractions or look out for specific items in order to get a “dab” on their bingo card.
