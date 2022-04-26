@@ -4,12 +4,12 @@ This is the final project for Northcoders full-stack software development bootca
 
 **Pingo** is a photo bingo mobile application built with React Native and Firebase. It mixes the excitement of a photo scavenger hunt with the novelty of a classic bingo game!
 
-![application-homepage](/assets/product/homepage.png)
-![bingo-pack](/assets/product/packs.png)
-![bingo-dabs](/assets/product/dabs.png)
-![bingo-congrats](/assets/product/congrats.png)
-![map](/assets/product/map.png)
-![progress](/assets/product/progress.png)
+<img src='src/assets/product/homepage.png' width='300'>
+<img src='src/assets/product/packs.png' width='300'>
+<img src='src/assets/product/dabs.png' width='300'>
+<img src='src/assets/product/congrats.png' width='300'>
+<img src='src/assets/product/map.png' width='300'>
+<img src='src/assets/product/progress.png' width='300'>
 
 ## How does it work?
 
@@ -32,7 +32,8 @@ For iOS: https://apps.apple.com/us/app/expo-go/id982107779
 For Android: https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_GB&gl=US
 
 Step 2 - Scan this QR code:
-![qr-code]()
+<br>
+<img src='src/assets/product/qr.png' width='200'>
 
 ## Or to view the project locally
 
